@@ -5,23 +5,44 @@ import javax.swing.*;
 import javax.swing.text.*;
 
 public class Postitnotes extends JFrame{
+
+    private Container pane;
+    private JLabel j;
+    private JButton b;
+    private JTextArea t;
+
     
     public Postitnotes(){
 	//create the place for text input
 	textBody();
 	//create the window
 	editor();
+
+	this.setTitle("Post it notes");
+	this.setSize(600, 400);
+	this.setLocation(100,100);
+	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+	pane = this.getContentPane();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+	JButton b = new JButton("save");
+	b.addActionListener(this);
+	b.setActionCommand("save");
+	t = new JTextArea(400,400);
+	private boolean ifChanged = false;
+	pane.add(j);
+	pane.add(t);
+	pane.add(b);
     }
 
     //save file
-    private void saveFile(File filename){
+    private void saveFile(String filename){
 	try{
-	    BufferedWriter w = new BufferedWriter(new FileWriter(filename));
-
-	    //to be saved in special "notes" folder or something, needs to create the "notes" folder though
-	    w.write(textBody.getText());
+	    BufferedWriter w = new BufferedWriter(new FileWriter("Z:\\notes\\"+filename+".txt"));
+	    //need to figue out how to save it in special "notes" folder
+	    t.write(w);
 	    w.close();
-	    window.setTitle(filename.getName());
+	    window.setTitle(filename);
 	    ifSaved = true;
 	    //System.out.println("File saved!") This might have to do with GUI stuff
 	}
@@ -60,6 +81,13 @@ public class Postitnotes extends JFrame{
     }
 
     public void actionPerformed(ActionEvent ev){
+	//click save button -> saves file
+	String event = ev.getActionCommand();
+	if (event.equals("save")){
+	    String title = t.getText().substring(31);
+	    saveFile(title);
+	}
+	    
     }
     
     private JFrame textBody(){
