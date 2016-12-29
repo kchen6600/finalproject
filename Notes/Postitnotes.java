@@ -5,9 +5,8 @@ import javax.swing.*;
 import javax.swing.text.*;
 
 public class Postitnotes extends JFrame{
+    
     public Postitnotes(){
-	//create the sidebar
-
 	//create the place for text input
 	textBody();
 	//create the window
