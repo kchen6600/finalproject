@@ -60,6 +60,9 @@ public class Postitnotes extends JFrame{
 	}
     }
 
+    public void actionPerformed(ActionEvent ev){
+    }
+    
     private JFrame textBody(){
     }
 
