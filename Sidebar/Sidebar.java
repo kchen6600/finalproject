@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-public class Sidebar extends JFrame implements ActionListener{
+public class Sidebar extends JFrame implements ActionListener, MouseListener{
     private Container sidebar;
     private Jlabel title;
 
@@ -21,6 +21,14 @@ public class Sidebar extends JFrame implements ActionListener{
 	b.setActionCommand("newNote");
 	sideBar.add(newNote);
 
+	//how will delete button work? do more research one double click/one
+	//click
+	
+	// JButton delete = new JButton("Delete Note");
+	// delete.addActionListener(this);
+	// b.setActionCommand("delete");
+	// delete.add(delete);
+
 	//create directory for post it notes
 	File directoryName = File("notes");
 	if(!directoryName.exits()){
@@ -36,8 +44,9 @@ public class Sidebar extends JFrame implements ActionListener{
 		i = name.indexOf(".txt");
 		fileName = name.substring(0,i);
 		JButton fileOnSidebar = new JButton(fileName);
-		fileOnSideBar.newActionListener(this);
-		b.setActionCommand(fileName);
+		fileOnSidebar.newActionListener(this);
+		fileOnSidebar.setActionCommand("txt" + fileName);
+		fileOnSidebar.add(filename);
 	    }
 	    else{
 		System.out.println("No current notes in your folder.");
@@ -46,15 +55,19 @@ public class Sidebar extends JFrame implements ActionListener{
 
 	//how are timestamps organized in files??
 
-    }
+    }	    
 
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	if(event.equals("newNote")){
-	    //create new note method
+	    PostitNotes postit = new Postitnotes();
+       	}
+	if(event.substring(0, 3).equals("txt")){
+	    
+	    //where will openNote method be located?
+	    
+	    postit.openNote(event.substring(3));
 	}
     }
-
-    
 }
-
+	
