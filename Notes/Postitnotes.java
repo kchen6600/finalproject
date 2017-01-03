@@ -5,15 +5,16 @@ import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.JOptionPane;
 
-public class Postitnotes extends JFrame{
+public class Postitnotes extends JFrame implements ActionListener{
 
     private Container pane;
     private JLabel j;
     private JButton b;
-    private JTextArea t;
+    private JTextArea textBody;
     private JTextArea titlebar;
     private boolean ifChanged;
     private boolean ifSaved;
+    private boolean ifOpened;
     private String current;
     
     public Postitnotes(){
@@ -27,14 +28,14 @@ public class Postitnotes extends JFrame{
 	JButton b = new JButton("save");
 	b.addActionListener(this);
 	b.setActionCommand("save");
-	t = new JTextArea(400,400);
+	textBody = new JTextArea(400,400);
 	titlebar = new JTextArea(400,100);
 	ifChanged = false;
 	current = "Untitled";
 	
 	pane.add(j);
 	pane.add(titlebar);
-	pane.add(t);
+	pane.add(textBody);
 	pane.add(b);
     }
 
@@ -43,7 +44,7 @@ public class Postitnotes extends JFrame{
 	try{
 	    BufferedWriter w = new BufferedWriter(new FileWriter("Z:\\finalproject\\postitnotes\\"+filename+".txt"));
 	    //need to figue out how to save it in special "notes" folder
-	    t.write(w);
+	    textBody.write(w);
 	    w.close();
 	    window.setTitle(filename);
 	    ifSaved = true;
@@ -83,7 +84,7 @@ public class Postitnotes extends JFrame{
     //open file
     private void openFile(File filename){
 	try{
-	    current = filename;
+	    current = filename.getName();
 	    FileReader r = new FileReader(filename);
 	    textBody.read(r, null);
 	    window.setTitle(filename.getName());
