@@ -20,6 +20,8 @@ public class Sidebar extends JFrame implements ActionListener{
 	b.setActionCommand("newNote");
 
 	//parse through file names and list all titles and time stamps
+
+	//create directory for post it notes
     }
 
     public void actionPerformed(ActionEvent e){
@@ -31,9 +33,4 @@ public class Sidebar extends JFrame implements ActionListener{
 
     
 }
-	
-	
-	    
-	    
 
-}
