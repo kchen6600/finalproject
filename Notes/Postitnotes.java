@@ -46,7 +46,7 @@ public class Postitnotes extends JFrame implements ActionListener{
 	    //need to figue out how to save it in special "notes" folder
 	    textBody.write(w);
 	    w.close();
-	    window.setTitle(filename);
+	    this.setTitle(filename);
 	    ifSaved = true;
 	    ifChanged = false;
 	    //System.out.println("File saved!") This might have to do with GUI stuff
@@ -69,7 +69,7 @@ public class Postitnotes extends JFrame implements ActionListener{
     
    
     //save edits to file -- I don't think this works yet pls help
-    private void saveEdits(File filename){
+    private void saveEdits(String filename){
 	try{
 	    BufferedWriter w = new BufferedWriter(new FileWriter(filename));
 	    w.write(textBody.getText());
@@ -87,7 +87,7 @@ public class Postitnotes extends JFrame implements ActionListener{
 	    current = filename.getName();
 	    FileReader r = new FileReader(filename);
 	    textBody.read(r, null);
-	    window.setTitle(filename.getName());
+	    this.setTitle(filename.getName());
 	    ifOpened = true;
 	    //file opens
 	}
