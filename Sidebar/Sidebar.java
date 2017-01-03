@@ -19,6 +19,7 @@ public class Sidebar extends JFrame implements ActionListener{
 	JButton newNote = new JButton("New Note");
 	newNote.addActionListener(this);
 	b.setActionCommand("newNote");
+	sideBar.add(newNote);
 
 	//create directory for post it notes
 	File directoryName = File("notes");
@@ -26,7 +27,7 @@ public class Sidebar extends JFrame implements ActionListener{
 	    boolean success = testDirectoryName.mkdir();
 	}
 
-	//parse through file names and list all titles and time stamps
+	//parse through file names and list all titles
 	File dir = new File("notes");
 	File[] directoryListing = dir.listFiles();
 	if(directoryListing != null){
@@ -34,12 +35,16 @@ public class Sidebar extends JFrame implements ActionListener{
 		String name = child.getName();
 		i = name.indexOf(".txt");
 		fileName = name.substring(0,i);
-		
-		
+		JButton fileOnSidebar = new JButton(fileName);
+		fileOnSideBar.newActionListener(this);
+		b.setActionCommand(fileName);
 	    }
 	    else{
 		System.out.println("No current notes in your folder.");
 	    }
+	}
+
+	//how are timestamps organized in files??
 
     }
 
