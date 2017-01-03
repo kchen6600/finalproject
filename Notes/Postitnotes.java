@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.text.*;
+import javax.swing.JOptionPane;
 
 public class Postitnotes extends JFrame{
 
@@ -10,7 +11,9 @@ public class Postitnotes extends JFrame{
     private JLabel j;
     private JButton b;
     private JTextArea t;
+    private JTextArea titlebar;
     private boolean ifChanged;
+    private boolean ifSaved;
     private String current;
     
     public Postitnotes(){
@@ -25,10 +28,12 @@ public class Postitnotes extends JFrame{
 	b.addActionListener(this);
 	b.setActionCommand("save");
 	t = new JTextArea(400,400);
+	titlebar = new JTextArea(400,100);
 	ifChanged = false;
 	current = "Untitled";
 	
 	pane.add(j);
+	pane.add(titlebar);
 	pane.add(t);
 	pane.add(b);
     }
@@ -36,7 +41,7 @@ public class Postitnotes extends JFrame{
     //save file
     private void saveFile(String filename){
 	try{
-	    BufferedWriter w = new BufferedWriter(new FileWriter("Z:\\notes\\"+filename+".txt"));
+	    BufferedWriter w = new BufferedWriter(new FileWriter("Z:\\finalproject\\postitnotes\\"+filename+".txt"));
 	    //need to figue out how to save it in special "notes" folder
 	    t.write(w);
 	    w.close();
@@ -52,12 +57,14 @@ public class Postitnotes extends JFrame{
     }
 
     //need to do more research on how to integrate this
+    /**
     private KeyListener k;
     k = new KeyAdapter() {
 	public void keyPressed(KeyEvent ev){
 	    ifChanged = true;
 	}
     };
+    **/
     
    
     //save edits to file -- I don't think this works yet pls help
@@ -94,15 +101,19 @@ public class Postitnotes extends JFrame{
 	String event = ev.getActionCommand();
 	if (event.equals("save")){
 	    if(!current.equals("Untitled")){
-	        current = t.getText().substring(21);
-		//need to write a loop that ensures the substring is 20 characters, as in add spaces if it's less than 20 characters to make it 20
+	        current = titlebar.getText();
+       
 		saveFile(current);
 	    }
 	    else{
 		saveEdits(current);
+	    }
 	}
 	    
     }
 
     //getters and setters will be here (if needed for sidebar or texteditor)
+    public static void main (String[]args){
+	Postitnotes b = new Postitnotes();
+    }
 }
