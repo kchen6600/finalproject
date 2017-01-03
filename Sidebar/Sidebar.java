@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-public class Sidebar extends JFrame implements ActionListener, MouseListener{
+public class Sidebar extends JFrame implements ActionListener{
     private Container sidebar;
     private Jlabel title;
 
@@ -14,12 +14,12 @@ public class Sidebar extends JFrame implements ActionListener, MouseListener{
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	sidebar = this.getContentPane();
-	sidebar.getLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+	sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
 
 	JButton newNote = new JButton("New Note");
 	newNote.addActionListener(this);
-	b.setActionCommand("newNote");
-	sideBar.add(newNote);
+	newNote.setActionCommand("newNote");
+	sidebar.add(newNote);
 
 	//how will delete button work? do more research one double click/one
 	//click
@@ -30,13 +30,14 @@ public class Sidebar extends JFrame implements ActionListener, MouseListener{
 	// delete.add(delete);
 
 	//create directory for post it notes
-	File directoryName = File("notes");
+	
+	File directoryName = File("postitnotes");
 	if(!directoryName.exits()){
 	    boolean success = testDirectoryName.mkdir();
 	}
 
 	//parse through file names and list all titles
-	File dir = new File("notes");
+	File dir = new File("postitnotes");
 	File[] directoryListing = dir.listFiles();
 	if(directoryListing != null){
 	    for(File child : directoryListing){
@@ -48,9 +49,6 @@ public class Sidebar extends JFrame implements ActionListener, MouseListener{
 		fileOnSidebar.setActionCommand("txt" + fileName);
 		fileOnSidebar.add(filename);
 	    }
-	    else{
-		System.out.println("No current notes in your folder.");
-	    }
 	}
 
 	//how are timestamps organized in files??
@@ -60,7 +58,7 @@ public class Sidebar extends JFrame implements ActionListener, MouseListener{
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	if(event.equals("newNote")){
-	    PostitNotes postit = new Postitnotes();
+	    Postitnotes postit = new Postitnotes();
        	}
 	if(event.substring(0, 3).equals("txt")){
 	    
