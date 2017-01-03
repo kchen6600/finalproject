@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class Sidebar extends JFrame implements ActionListener{
     private Container sidebar;
@@ -19,9 +20,27 @@ public class Sidebar extends JFrame implements ActionListener{
 	newNote.addActionListener(this);
 	b.setActionCommand("newNote");
 
-	//parse through file names and list all titles and time stamps
-
 	//create directory for post it notes
+	File directoryName = File("notes");
+	if(!directoryName.exits()){
+	    boolean success = testDirectoryName.mkdir();
+	}
+
+	//parse through file names and list all titles and time stamps
+	File dir = new File("notes");
+	File[] directoryListing = dir.listFiles();
+	if(directoryListing != null){
+	    for(File child : directoryListing){
+		String name = child.getName();
+		i = name.indexOf(".txt");
+		fileName = name.substring(0,i);
+		
+		
+	    }
+	    else{
+		System.out.println("No current notes in your folder.");
+	    }
+
     }
 
     public void actionPerformed(ActionEvent e){
