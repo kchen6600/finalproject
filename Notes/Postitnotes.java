@@ -35,7 +35,7 @@ public class Postitnotes extends JFrame implements ActionListener{
 	//JButton b2 = new JButton("No...");
 	//b2.addActionListener(this);
 	//b2.setActionCommand("NotByte");
-	titlebar = new JTextField(10);
+	titlebar = new JTextField(5);
 	//JCheckBox c = new JCheckBox("OverClock");
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
@@ -66,7 +66,7 @@ public class Postitnotes extends JFrame implements ActionListener{
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
 		}
-	};
+     };
 
     
     //save file
