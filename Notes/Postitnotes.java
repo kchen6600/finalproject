@@ -7,38 +7,68 @@ import javax.swing.JOptionPane;
 
 public class Postitnotes extends JFrame implements ActionListener{
 
+    
     private Container pane;
-    private JLabel j;
+    private JLabel titlelabel;
+    private JLabel textlabel;
     private JButton b;
     private JTextArea textBody;
-    private JTextArea titlebar;
-    private boolean ifChanged;
+    private JTextField titlebar;
+    private boolean ifChanged = false;
     private boolean ifSaved;
     private boolean ifOpened;
-    private String current;
-    
-    public Postitnotes(){
-	this.setTitle("Post it notes");
-	this.setSize(600, 400);
+    private String current = "Untitled";
+
+
+
+    public Postitnotes() {
+	this.setTitle("CREATE NEW NOTE");
+	this.setSize(600,400);
 	this.setLocation(100,100);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+	
 	pane = this.getContentPane();
-        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 	JButton b = new JButton("save");
 	b.addActionListener(this);
 	b.setActionCommand("save");
-	textBody = new JTextArea(400,400);
-	titlebar = new JTextArea(400,100);
-	ifChanged = false;
-	current = "Untitled";
+	//JButton b2 = new JButton("No...");
+	//b2.addActionListener(this);
+	//b2.setActionCommand("NotByte");
+	titlebar = new JTextField(10);
+	//JCheckBox c = new JCheckBox("OverClock");
+	titlelabel = new JLabel("TITLE: ");
+	textBody = new JTextArea(10,60);
+	textlabel = new JLabel("TEXT: ");
 	
-	pane.add(j);
-	pane.add(titlebar);
-	pane.add(textBody);
-	pane.add(b);
-    }
+	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
+	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
+	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+	pack();
+	
+	pane.add(titlelabel);
+	pane.add(titlebar);
+	pane.add(textlabel);
+	pane.add(textBody);
+	pane.add(scroll2,BorderLayout.CENTER);
+	pane.add(b);
+
+       	textBody.addKeyListener(k1);
+	setTitle(current);
+	setVisible(true);
+  }
+    
+    
+
+
+     private KeyListener k1 = new KeyAdapter() {
+		public void keyPressed(KeyEvent e) {
+			ifChanged = true;
+		}
+	};
+
+    
     //save file
     private void saveFile(String filename){
 	try{
