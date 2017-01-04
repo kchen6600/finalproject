@@ -3,23 +3,22 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-public class Sidebar extends JFrame implements ActionListener, MouseListener{
+public class Sidebar extends JFrame implements ActionListener{
     private Container sidebar;
-    private Jlabel title;
+    private JLabel title;
 
     public Sidebar(){
 	this.setTitle("Your Glorified Post-it Notes");
 	this.setSize(1000, 600);
 	this.setLocation(0, 0);
-	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	sidebar = this.getContentPane();
-	sidebar.getLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+	sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
 
 	JButton newNote = new JButton("New Note");
 	newNote.addActionListener(this);
-	b.setActionCommand("newNote");
-	sideBar.add(newNote);
+	newNote.setActionCommand("newNote");
+	sidebar.add(newNote);
 
 	//how will delete button work? do more research one double click/one
 	//click
@@ -30,9 +29,9 @@ public class Sidebar extends JFrame implements ActionListener, MouseListener{
 	// delete.add(delete);
 
 	//create directory for post it notes
-	File directoryName = File("notes");
-	if(!directoryName.exits()){
-	    boolean success = testDirectoryName.mkdir();
+	File directoryName = new File("notes");
+	if(!directoryName.exists()){
+	    boolean success = directoryName.mkdir();
 	}
 
 	//parse through file names and list all titles
@@ -41,33 +40,37 @@ public class Sidebar extends JFrame implements ActionListener, MouseListener{
 	if(directoryListing != null){
 	    for(File child : directoryListing){
 		String name = child.getName();
-		i = name.indexOf(".txt");
-		fileName = name.substring(0,i);
+		int i = name.indexOf(".txt");
+		String fileName = name.substring(0,i);
 		JButton fileOnSidebar = new JButton(fileName);
-		fileOnSidebar.newActionListener(this);
+		fileOnSidebar.addActionListener(this);
 		fileOnSidebar.setActionCommand("txt" + fileName);
-		fileOnSidebar.add(filename);
-	    }
-	    else{
-		System.out.println("No current notes in your folder.");
+		sidebar.add(fileOnSidebar);
+
 	    }
 	}
 
 	//how are timestamps organized in files??
+	//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 
     }	    
 
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	if(event.equals("newNote")){
-	    PostitNotes postit = new Postitnotes();
+	    //Postitnotes postit = new Postitnotes();
        	}
 	if(event.substring(0, 3).equals("txt")){
 	    
 	    //where will openNote method be located?
 	    
-	    postit.openNote(event.substring(3));
+	    //postit.openNote(event.substring(3));
 	}
+    }
+
+    public static void main(String[] args){
+	Sidebar hi = new Sidebar();
     }
 }
 	
