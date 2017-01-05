@@ -9,14 +9,12 @@ public class Postitnotes extends JFrame implements ActionListener{
 
     
     private Container pane;
-    private JLabel titlelabel;
-    private JLabel textlabel;
+    private JLabel textlabel, titlelabel;
     private JButton b;
     private JTextArea textBody;
     private JTextField titlebar;
     private boolean ifChanged = false;
-    private boolean ifSaved;
-    private boolean ifOpened;
+    private boolean ifSaved, ifOpened;
     private String current = "Untitled";
 
 
@@ -59,9 +57,6 @@ public class Postitnotes extends JFrame implements ActionListener{
 	setVisible(true);
   }
     
-    
-
-
      private KeyListener k1 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
