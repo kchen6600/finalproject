@@ -1,7 +1,9 @@
 import javax.swing.*;
+import javax.swing.text.*;
+import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.*;
 
 public class Sidebar extends JFrame implements ActionListener{
     private Container sidebar;
@@ -9,8 +11,10 @@ public class Sidebar extends JFrame implements ActionListener{
 
     public Sidebar(){
 	this.setTitle("Your Glorified Post-it Notes");
-	this.setSize(1000, 600);
-	this.setLocation(0, 0);
+	this.setSize(100, 100);
+	this.setLocation(100, 100);
+	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 
 	sidebar = this.getContentPane();
 	sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
@@ -18,7 +22,11 @@ public class Sidebar extends JFrame implements ActionListener{
 	JButton newNote = new JButton("New Note");
 	newNote.addActionListener(this);
 	newNote.setActionCommand("newNote");
-	sidebar.add(newNote);
+
+	JButton hello = new JButton("hello");
+	hello.addActionListener(this);
+	hello.setActionCommand("hi");
+	
 
 	//how will delete button work? do more research one double click/one
 	//click
@@ -51,7 +59,9 @@ public class Sidebar extends JFrame implements ActionListener{
 	}
 
 	//how are timestamps organized in files??
-	//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	sidebar.add(newNote);
+	sidebar.add(hello);
+
 
 
     }	    
