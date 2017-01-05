@@ -31,7 +31,7 @@ public class Sidebar extends JFrame implements ActionListener{
 	//create directory for post it notes
 	File directoryName = new File("notes");
 	if(!directoryName.exists()){
-	    boolean success = directoryName.mkdir();
+ 	    boolean success = directoryName.mkdir();
 
 	}
 
@@ -46,8 +46,7 @@ public class Sidebar extends JFrame implements ActionListener{
 		JButton fileOnSidebar = new JButton(fileName);
 		fileOnSidebar.addActionListener(this);
 		fileOnSidebar.setActionCommand("txt" + fileName);
-
-		fileOnSidebar.add(filename);
+		sidebar.add(fileOnSidebar);
 	    }
 	}
 
@@ -75,4 +74,3 @@ public class Sidebar extends JFrame implements ActionListener{
 	Sidebar hi = new Sidebar();
     }
 }
-	
