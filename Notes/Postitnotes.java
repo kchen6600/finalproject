@@ -86,18 +86,7 @@ public class Postitnotes extends JFrame implements ActionListener{
 	    //System.out.println("File could not be saved, file is open elsewhere, etc.") This might have to do with GUI stuff
 	}
     }
-
-    //need to do more research on how to integrate this
-    /**
-    private KeyListener k;
-    k = new KeyAdapter() {
-	public void keyPressed(KeyEvent ev){
-	    ifChanged = true;
-	}
-    };
-    **/
     
-   
     //save edits to file -- I don't think this works yet pls help
     private void saveEdits(String filename){
 	try{
