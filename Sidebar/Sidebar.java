@@ -32,10 +32,11 @@ public class Sidebar extends JFrame implements ActionListener{
 	File directoryName = new File("notes");
 	if(!directoryName.exists()){
 	    boolean success = directoryName.mkdir();
+
 	}
 
 	//parse through file names and list all titles
-	File dir = new File("notes");
+	File dir = new File("postitnotes");
 	File[] directoryListing = dir.listFiles();
 	if(directoryListing != null){
 	    for(File child : directoryListing){
@@ -45,8 +46,8 @@ public class Sidebar extends JFrame implements ActionListener{
 		JButton fileOnSidebar = new JButton(fileName);
 		fileOnSidebar.addActionListener(this);
 		fileOnSidebar.setActionCommand("txt" + fileName);
-		sidebar.add(fileOnSidebar);
 
+		fileOnSidebar.add(filename);
 	    }
 	}
 
@@ -60,6 +61,7 @@ public class Sidebar extends JFrame implements ActionListener{
 	String event = e.getActionCommand();
 	if(event.equals("newNote")){
 	    //Postitnotes postit = new Postitnotes();
+
        	}
 	if(event.substring(0, 3).equals("txt")){
 	    
