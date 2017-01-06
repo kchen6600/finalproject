@@ -11,8 +11,8 @@ public class Sidebar extends JFrame implements ActionListener{
 
     public Sidebar(){
 	this.setTitle("Your Glorified Post-it Notes");
-	this.setSize(100, 100);
-	this.setLocation(100, 100);
+	this.setSize(500, 1000);
+	this.setLocation(10, 10);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
@@ -22,27 +22,22 @@ public class Sidebar extends JFrame implements ActionListener{
 	JButton newNote = new JButton("New Note");
 	newNote.addActionListener(this);
 	newNote.setActionCommand("newNote");
-
-	JButton hello = new JButton("hello");
-	hello.addActionListener(this);
-	hello.setActionCommand("hi");
 	
 
 	//how will delete button work? do more research one double click/one
 	//click
 	
-	// JButton delete = new JButton("Delete Note");
-	// delete.addActionListener(this);
-	// b.setActionCommand("delete");
-	// delete.add(delete);
+	JButton delete = new JButton("Delete Note");
+	delete.addActionListener(this);
+	delete.setActionCommand("delete");
 
 	//create directory for post it notes
-	File directoryName = new File("notes");
+	File directoryName = new File("postitnotes");
 	if(!directoryName.exists()){
  	    boolean success = directoryName.mkdir();
 
 	}
-
+	/**
 	//parse through file names and list all titles
 	File dir = new File("postitnotes");
 	File[] directoryListing = dir.listFiles();
@@ -57,10 +52,11 @@ public class Sidebar extends JFrame implements ActionListener{
 		sidebar.add(fileOnSidebar);
 	    }
 	}
+	**/
 
 	//how are timestamps organized in files??
 	sidebar.add(newNote);
-	sidebar.add(hello);
+	sidebar.add(delete);
 
 
 
@@ -78,9 +74,14 @@ public class Sidebar extends JFrame implements ActionListener{
 	    
 	    //postit.openNote(event.substring(3));
 	}
+
+	if(event.equals("delete")){
+	    //how does delete work?
+	}
     }
 
     public static void main(String[] args){
 	Sidebar hi = new Sidebar();
+	hi.setVisible(true);
     }
 }

@@ -15,13 +15,14 @@ public class Side extends JFrame implements ActionListener{
 
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-	JButton b = new JButton("Byte");
+	JButton b2 = new JButton("Byte");
 	b.addActionListener(this);
 	b.setActionCommand("byte");
-	t = new JTextField(10);
+	t = newJTextField(10);
 
 	pane.add(t);
 	pane.add(b);
+	pane.add(j);
     }
 
     public void actionPerformed(ActionEvent e){
@@ -29,7 +30,6 @@ public class Side extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args){
-	Side hi = new Side();
-	hi.setVisible(true);
+	Side();
     }
 }
