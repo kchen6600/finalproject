@@ -16,7 +16,6 @@ public class Postitnotes extends JFrame implements ActionListener {
     private JTextArea textBody;
     private JTextField titlebar;
     private boolean ifChanged = false;
-
     private boolean ifSaved, ifOpened;
 
     private String current = "Untitled";
@@ -31,7 +30,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-	JButton b = new JButton("save");
+        b = new JButton("save");
 	b.addActionListener(this);
 	b.setActionCommand("save");
 	//b2.addActionListener(this);
@@ -63,6 +62,16 @@ public class Postitnotes extends JFrame implements ActionListener {
      private KeyListener k1 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
+				System.out.println("KEYPRESSED");
+		       	b.setEnabled(ifChanged);
+		}
+	};
+
+         private KeyListener k2 = new KeyAdapter() {
+		public void keyPressed(KeyEvent e) {
+			ifChanged = true;
+			System.out.println("KEYPRESSED");
+		       	b.setEnabled(ifChanged);
 		}
 	};
 
