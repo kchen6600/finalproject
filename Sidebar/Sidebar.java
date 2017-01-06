@@ -41,10 +41,11 @@ public class Sidebar extends JFrame implements ActionListener{
 	**/
        
 	//parse through file names and list all titles
-	File dir = new File("Z:\\finalproject\\postitnotes");
+	File dir = new File("Z:/finalproject/postitnotes/");
 	File[] directoryListing = dir.listFiles();
-	if(directoryListing != null){
+	if(directoryListing.length != 0){
 	    for(File child : directoryListing){
+		System.out.println(child.getName());
 		String name = child.getName();
 		int i = name.indexOf(".txt");
 		String fileName = name.substring(0,i);
@@ -53,6 +54,9 @@ public class Sidebar extends JFrame implements ActionListener{
 		fileOnSidebar.setActionCommand("txt" + fileName);
 		sidebar.add(fileOnSidebar);
 	    }
+	}
+	else{
+	    System.out.println("File don't work");
 	}
 	
 
@@ -67,7 +71,7 @@ public class Sidebar extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	if(event.equals("newNote")){
-	    Postitnotes postit = new Postitnotes();
+	    //Postitnotes postit = new Postitnotes();
 
        	}
 	if(event.substring(0, 3).equals("txt")){
