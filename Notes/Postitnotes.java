@@ -16,8 +16,9 @@ public class Postitnotes extends JFrame implements ActionListener {
     private JTextArea textBody;
     private JTextField titlebar;
     private boolean ifChanged = false;
-    private boolean ifSaved = false;
-    private boolean ifOpened;
+
+    private boolean ifSaved, ifOpened;
+
     private String current = "Untitled";
 
 
@@ -58,25 +59,12 @@ public class Postitnotes extends JFrame implements ActionListener {
        
   }
     
-    private KeyListener k1 = new KeyAdapter(){
-	      @Override
-    public void keyPressed(KeyEvent e) {
-       	ifChanged = true;
-	System.out.println("Key typed");
-      	b.setEnabled(true);
-    }
-	};
-    
-	private KeyListener k2 = new KeyAdapter(){
-		  @Override
-    public void keyPressed(KeyEvent e) {
-       	ifChanged = true;
-	System.out.println("Key typed");
-      	b.setEnabled(true);
-    }
-	    };
 
- 
+     private KeyListener k1 = new KeyAdapter() {
+		public void keyPressed(KeyEvent e) {
+			ifChanged = true;
+		}
+	};
 
     
     //save file
@@ -97,18 +85,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    e.printStackTrace();
 	    //System.out.println("File could not be saved, file is open elsewhere, etc.") This might have to do with GUI stuff
 	}
-	    **/
-	    FileWriter writer = new FileWriter("Z:\\finalproject\\postitnotes\\"+filename+".txt");
-	    textBody.write(writer);
-	    writer.close();
-	    current = filename;
-	    setTitle(current);
-	    ifChanged = false;
-	    b.setEnabled(false);
-	}
-	catch(IOException e){
-	    e.printStackTrace();
-	}
+
     }
     
     //save edits to file -- I don't think this works yet pls help
