@@ -31,6 +31,9 @@ public class Sidebar extends JFrame implements ActionListener{
 	delete.addActionListener(this);
 	delete.setActionCommand("delete");
 
+	sidebar.add(newNote);
+	sidebar.add(delete);
+
 	/**
 	//create directory for post it notes
 	File directoryName = new File("postitnotes");
@@ -41,7 +44,7 @@ public class Sidebar extends JFrame implements ActionListener{
 	**/
        
 	//parse through file names and list all titles
-	File dir = new File("Z:/finalproject/postitnotes/");
+	File dir = new File("../postitnotes/");
 	File[] directoryListing = dir.listFiles();
 	if(directoryListing.length != 0){
 	    for(File child : directoryListing){
@@ -61,8 +64,7 @@ public class Sidebar extends JFrame implements ActionListener{
 	
 
 	//how are timestamps organized in files??
-	sidebar.add(newNote);
-	sidebar.add(delete);
+	
 
 
 
