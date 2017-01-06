@@ -85,6 +85,18 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    e.printStackTrace();
 	    //System.out.println("File could not be saved, file is open elsewhere, etc.") This might have to do with GUI stuff
 	}
+	     **/
+	    FileWriter writer = new FileWriter("Z:\\finalproject\\postitnotes\\"+filename+".txt");
+	    textBody.write(writer);
+	    writer.close();
+	    current = filename;
+	    setTitle(current);
+	    ifChanged = false;
+	    b.setEnabled(false);
+	}
+	catch(IOException e){
+	    e.printStackTrace();
+	}
 
     }
     
