@@ -95,7 +95,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    //System.out.println("File could not be saved, file is open elsewhere, etc.") This might have to do with GUI stuff
 	}
 	     **/
-	    FileWriter writer = new FileWriter("../postitnotes/"+filename+".txt");
+	    FileWriter writer = new FileWriter("/postitnotes/"+filename+".txt");
 	    System.out.println("Writer created!");
 	    textBody.write(writer);
 	    writer.close();
