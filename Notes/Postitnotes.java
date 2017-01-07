@@ -80,7 +80,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     private void saveFile(String filename){
 	try{
 	    /**
-	    BufferedWriter w = new BufferedWriter(new FileWriter("Z:\\finalproject\\postitnotes\\"+filename+".txt"));
+	    BufferedWriter w = new BufferedWriter(new FileWriter("../postitnotes/"+filename+".txt"));
 	    //need to figue out how to save it in special "notes" folder
 	    textBody.write(w);
 	    w.close();
@@ -95,7 +95,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    //System.out.println("File could not be saved, file is open elsewhere, etc.") This might have to do with GUI stuff
 	}
 	     **/
-	    FileWriter writer = new FileWriter("Z:\\finalproject\\postitnotes\\"+filename+".txt");
+	    FileWriter writer = new FileWriter("../postitnotes/"+filename+".txt");
+	    System.out.println("Writer created!");
 	    textBody.write(writer);
 	    writer.close();
 	    current = filename;
@@ -108,20 +109,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	}
 
     }
-    
-    //save edits to file -- I don't think this works yet pls help
-    private void saveEdits(String filename){
-	try{
-	    BufferedWriter w = new BufferedWriter(new FileWriter(filename));
-	    w.write(textBody.getText());
-	    w.close();
-	    
-	}
-	catch (IOException e){
-	    e.printStackTrace();
-	    //System.out.println("File could not be saved, file is open elsewhere, etc.") This might have to do with GUI stuff
-	}
-    }
+
     //open file
     private void openFile(File filename){
 	try{
@@ -142,14 +130,16 @@ public class Postitnotes extends JFrame implements ActionListener {
 	//click save button -> saves file
 	String event = ev.getActionCommand();
 	if (event.equals("save")){
-	    if(!current.equals("Untitled")){
+	    System.out.println("Clicked Save");
+	    if(current.equals("Untitled")){
 	        current = titlebar.getText();
 		
 		saveFile(current);
 		setTitle(current);
+		System.out.println(ifChanged);
 	    }
 	    else{
-		saveEdits(current);
+		saveFile(current);
 	    }
 	}
 	    
