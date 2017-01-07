@@ -44,7 +44,7 @@ public class Sidebar extends JFrame implements ActionListener{
 	**/
        
 	//parse through file names and list all titles
-	File dir = new File("../postitnotes/");
+	File dir = new File("postitnotes/");
 	File[] directoryListing = dir.listFiles();
 	if(directoryListing.length != 0){
 	    for(File child : directoryListing){
