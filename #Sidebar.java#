@@ -65,14 +65,14 @@ public class Sidebar extends JFrame implements ActionListener{
        	}
 	
 	if(event.substring(0, 3).equals("txt")){
-	    Postitnotes post = new Postitnotes(event.substring(3));
+	    Postitnotes post = new Postitnotes();
 	}
 
 	if(event.equals("delete")){
 	    SidebarDelete deleteNotes = new SidebarDelete();
 	}
     }
-    
+	
     public static void main(String[] args){
 	Sidebar hi = new Sidebar();
 	hi.setVisible(true);
