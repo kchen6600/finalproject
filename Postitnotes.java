@@ -58,11 +58,48 @@ public class Postitnotes extends JFrame implements ActionListener {
        
   }
     
+    
+    public Postitnotes(String filename) {
+	this.setSize(600,300);
+	this.setLocation(100,100);
+	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	
+	pane = this.getContentPane();
+	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        b = new JButton("save");
+	b.addActionListener(this);
+	b.setActionCommand("save");
+	//b2.addActionListener(this);
+	titlebar = new JTextField(10);
+	titlelabel = new JLabel("TITLE: ");
+	textBody = new JTextArea(10,60);
+	textlabel = new JLabel("TEXT: ");
+	
+	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
+	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
+	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	
+	pane.add(titlelabel);
+	pane.add(titlebar);
+	pane.add(textlabel);
+	pane.add(textBody);
+	pane.add(scroll2,BorderLayout.CENTER);
+	pane.add(b);
 
+	openFile(filename);
+	
+	b.setEnabled(ifChanged);
+       	textBody.addKeyListener(k1);
+	titlebar.addKeyListener(k2);
+	setTitle(current);
+	setVisible(true);
+       
+  }
+
+    
      private KeyListener k1 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
-				System.out.println("KEYPRESSED");
 		       	b.setEnabled(ifChanged);
 		}
 	};
@@ -70,7 +107,6 @@ public class Postitnotes extends JFrame implements ActionListener {
          private KeyListener k2 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
-			System.out.println("KEYPRESSED");
 		       	b.setEnabled(ifChanged);
 		}
 	};
@@ -111,13 +147,14 @@ public class Postitnotes extends JFrame implements ActionListener {
     }
 
     //open file
-    private void openFile(File filename){
+    private void openFile(String filename){
 	try{
-	    current = filename.getName();
-	    FileReader r = new FileReader(filename);
+	    current = filename;
+	    FileReader r = new FileReader("postitnotes/"+filename+".txt");
 	    textBody.read(r, null);
-	    this.setTitle(filename.getName());
+	    // this.setTitle(filename);
 	    ifOpened = true;
+	    ifChanged = false;
 	    //file opens
 	}
 	catch(IOException e){
@@ -148,5 +185,6 @@ public class Postitnotes extends JFrame implements ActionListener {
     //getters and setters will be here (if needed for sidebar or texteditor)
     public static void main (String[]args){
 	Postitnotes b = new Postitnotes();
+	Postitnotes c = new Postitnotes("hello");
     }
 }
