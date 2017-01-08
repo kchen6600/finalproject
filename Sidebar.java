@@ -25,7 +25,7 @@ public class Sidebar extends JFrame implements ActionListener{
 	
 
 	
-	JButton delete = new JButton("Delete Note");
+	JButton delete = new JButton("Delete Notes");
 	delete.addActionListener(this);
 	delete.setActionCommand("delete");
 
