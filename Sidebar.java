@@ -80,18 +80,19 @@ public class Sidebar extends JFrame implements ActionListener{
 	private JLabel title;
 
 	public SidebarDelete(){
+	    
+	    sidebarDelete = this.getContentPane();
+	    sidebarDelete.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+
 	    this.setTitle("Your Glorified Post-it Notes");
 	    this.setSize(500, 1000);
 	    this.setLocation(10, 10);
 	    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-
-	    sidebarDelete = this.getContentPane();
-	    sidebarDelete.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-
 	    JButton newNote = new JButton("New Note");
 	    newNote.addActionListener(this);
 	    newNote.setActionCommand("newNote");
+	    //newNote.setEnabled(false);
        
 	
 	    JButton delete = new JButton("Delete Note");
@@ -138,25 +139,25 @@ public class Sidebar extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 	    String event = e.getActionCommand();
 	    if(event.equals("newNote")){
-		newNote.setEnabled(false);
+		//newNote.setEnabled(false);
 	    }
 	    if(event.substring(0, 3).equals("txt")){
 		//what to do?
 	    }
 	    if(event.equals("delete")){
-		delete.setEnabled(false);
+		//delete.setEnabled(false);
 	    }
 	    if(event.equals("deleteSelected")){
 		//PATH
-		try{
-		    Files.dele(path);
-		}catch(NoSuchFileException e){
+		//try{
+		    // Files.delete(path);
+		    //}catch(NoSuchFileException x){
 		    System.out.println("No such file or directory");
-		}catch(DirectoryNotEmptyException e){
+		    //}catch(DirectoryNotEmptyException x){
 		    System.out.println("Not empty directory");
-		}catch(IOException x){
+		    //}catch(IOException x){
 		    System.out.println("File permission problems.");
-		}
+		    //	}
 	    }
 	    if(event.equals("cancel")){
 		Sidebar hi = new Sidebar();
@@ -164,9 +165,8 @@ public class Sidebar extends JFrame implements ActionListener{
       	}
 
 	public void itemStateChanged(ItemEvent e){
-	    if(checkNote.isSelected()){
-		checkNote.setText("hello");
-	    }
+	    //if(checkNote.isSelected()){
+	    //checkNote.setText("hello");
 	}
     }
 	
