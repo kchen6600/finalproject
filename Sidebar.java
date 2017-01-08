@@ -62,19 +62,20 @@ public class Sidebar extends JFrame implements ActionListener{
 	String event = e.getActionCommand();
 	if(event.equals("newNote")){
 	    Postitnotes postit = new Postitnotes();
-
        	}
+	
 	if(event.substring(0, 3).equals("txt")){
-	    
-	    Postitnotes() post = new Postitnotes();
+	    Postitnotes post = new Postitnotes();
 	}
 
 	if(event.equals("delete")){
 	    SidebarDelete deleteNotes = new SidebarDelete();
 	}
     }
-
-    public class SidebarDelete extends JFrame implements ActionListener{
+    
+    //new class called SidebarDelete to delete files
+    
+    public class SidebarDelete extends JFrame implements ActionListener, ItemListener{
 	private Container sidebarDelete;
 	private JLabel title;
 
@@ -118,13 +119,9 @@ public class Sidebar extends JFrame implements ActionListener{
 		    String name = child.getName();
 		    int i = name.indexOf(".txt");
 		    String fileName = name.substring(0,i);
-		    /**
-		    JButton fileOnSidebar = new JButton(fileName);
-		    fileOnSidebar.addActionListener(this);
-		    fileOnSidebar.setActionCommand("txt" + fileName);
-		    sidebar.add(fileOnSidebar);
-		    **/
-}
+		    JCheckBox checkNote = new JCheckBox(fileName);
+		    checkNote.addItemListener(this);
+      		}
 	    }
 	    else{
 		System.out.println("File don't work");
@@ -137,8 +134,42 @@ public class Sidebar extends JFrame implements ActionListener{
 	    sidebarDelete.add(cancel);
 
 	}
+
+	public void actionPerformed(ActionEvent e){
+	    String event = e.getActionCommand();
+	    if(event.equals("newNote")){
+		newNote.setEnabled(false);
+	    }
+	    if(event.substring(0, 3).equals("txt")){
+		//what to do?
+	    }
+	    if(event.equals("delete")){
+		delete.setEnabled(false);
+	    }
+	    if(event.equals("deleteSelected")){
+		//PATH
+		try{
+		    Files.dele(path);
+		}catch(NoSuchFileException e){
+		    System.out.println("No such file or directory");
+		}catch(DirectoryNotEmptyException e){
+		    System.out.println("Not empty directory");
+		}catch(IOException x){
+		    System.out.println("File permission problems.");
+		}
+	    }
+	    if(event.equals("cancel")){
+		Sidebar hi = new Sidebar();
+	    }	    
+      	}
+
+	public void itemStateChanged(ItemEvent e){
+	    if(checkNote.isSelected()){
+		checkNote.setText("hello");
+	    }
+	}
     }
-    
+	
     public static void main(String[] args){
 	Sidebar hi = new Sidebar();
 	hi.setVisible(true);
