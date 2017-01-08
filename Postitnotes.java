@@ -26,7 +26,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	this.setTitle("CREATE NEW NOTE");
 	this.setSize(600,300);
 	this.setLocation(100,100);
-	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
@@ -62,7 +62,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     public Postitnotes(String filename) {
 	this.setSize(600,300);
 	this.setLocation(100,100);
-	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
