@@ -62,7 +62,6 @@ public class Postitnotes extends JFrame implements ActionListener {
      private KeyListener k1 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
-				System.out.println("KEYPRESSED");
 		       	b.setEnabled(ifChanged);
 		}
 	};
@@ -70,7 +69,6 @@ public class Postitnotes extends JFrame implements ActionListener {
          private KeyListener k2 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
-			System.out.println("KEYPRESSED");
 		       	b.setEnabled(ifChanged);
 		}
 	};
@@ -111,13 +109,14 @@ public class Postitnotes extends JFrame implements ActionListener {
     }
 
     //open file
-    private void openFile(File filename){
+    private void openFile(String filename){
 	try{
-	    current = filename.getName();
-	    FileReader r = new FileReader(filename);
+	    current = filename;
+	    FileReader r = new FileReader(filename+".txt");
 	    textBody.read(r, null);
-	    this.setTitle(filename.getName());
+	    this.setTitle(filename);
 	    ifOpened = true;
+	    ifChanged = false;
 	    //file opens
 	}
 	catch(IOException e){
