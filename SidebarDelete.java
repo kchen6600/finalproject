@@ -1,14 +1,17 @@
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.text.*;
 import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.ArrayList;
 
 
-public class SidebarDelete extends JFrame implements ActionListener, ItemListener{
+public class SidebarDelete extends JFrame implements ActionListener{
     private Container sidebarDelete;
     private JLabel title;
+    private ArrayList<String> filesDeleted = new ArrayList<String>();
 
     public SidebarDelete(){
 	    
@@ -48,7 +51,12 @@ public class SidebarDelete extends JFrame implements ActionListener, ItemListene
 	}
 
 	JList<String> list = new JList<>(fileList);
-	
+	list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+	list.addListSelectionListener(new ListSelectionListener(){
+		public void valueChanged(ListSelectionEvent event){
+		    filesDeleted.add(fileList[list.getSelectedIndex()]);
+		}
+	    });
 	sidebarDelete.add(list);
 	sidebarDelete.add(deleteSelected);
 	sidebarDelete.add(cancel);
@@ -57,24 +65,27 @@ public class SidebarDelete extends JFrame implements ActionListener, ItemListene
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	if(event.equals("deleteSelected")){
-	    //PATH
-	    //try{
-	    // Files.delete(path);
-	    //}catch(NoSuchFileException x){
-	    System.out.println("No such file or directory");
-	    //}catch(DirectoryNotEmptyException x){
-	    System.out.println("Not empty directory");
-	    //}catch(IOException x){
-	    System.out.println("File permission problems.");
-	    //	}
+	    for(int i = 0; i<filesDeleted.size(); i++){
+		String path = "postitnotes/"+filesDeleted.get(i)+".txt";
+		File file = new File(path);
+		//try{
+		file.delete();
+		/**
+		   }catch(NoSuchFileException x){
+		   System.out.println("No such file or directory");
+		   }catch(DirectoryNotEmptyException x){
+		   System.out.println("Not empty directory");
+		   }catch(IOException x){
+		   System.out.println("File permission problems.");
+		   }
+		**/
+		Sidebar hello = new Sidebar();
+		    
+	    }
 	}
 	if(event.equals("cancel")){
 	    Sidebar hi = new Sidebar();
 	}	    
-    }
-
-    public void itemStateChanged(ItemEvent e){
-
     }
 
     public static void main(String[] args){
