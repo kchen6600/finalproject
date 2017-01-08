@@ -89,8 +89,8 @@ public class SidebarDelete extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args){
-	SidebarDelete hi = new SidebarDelete();
-	hi.setVisible(true);
+	SidebarDelete test  = new SidebarDelete();
+	test.setVisible(true);
     }
 }
 

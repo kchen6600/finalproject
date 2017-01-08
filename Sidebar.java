@@ -70,6 +70,7 @@ public class Sidebar extends JFrame implements ActionListener{
 
 	if(event.equals("delete")){
 	    SidebarDelete deleteNotes = new SidebarDelete();
+	    deleteNotes.setVisible(true);
 	}
     }
     
