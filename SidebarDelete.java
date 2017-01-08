@@ -41,8 +41,10 @@ public class SidebarDelete extends JFrame implements ActionListener{
 		System.out.println(child.getName());
 		String name = child.getName();
 		int i = name.indexOf(".txt");
-		String fileName = name.substring(0,i);
-		fileList[j] = fileName;
+		if(i>0){
+		    String fileName = name.substring(0,i);
+		    fileList[j] = fileName;
+		}
 		j++;
 	    }
 	}

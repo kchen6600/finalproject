@@ -41,11 +41,13 @@ public class Sidebar extends JFrame implements ActionListener{
 		System.out.println(child.getName());
 		String name = child.getName();
 		int i = name.indexOf(".txt");
-		String fileName = name.substring(0,i);
-		JButton fileOnSidebar = new JButton(fileName);
-		fileOnSidebar.addActionListener(this);
-		fileOnSidebar.setActionCommand("txt" + fileName);
-		sidebar.add(fileOnSidebar);
+		if(i>0){
+		    String fileName = name.substring(0,i);
+		    JButton fileOnSidebar = new JButton(fileName);
+		    fileOnSidebar.addActionListener(this);
+		    fileOnSidebar.setActionCommand("txt" + fileName);
+		    sidebar.add(fileOnSidebar);
+		}
 	    }
 	}
 	else{
