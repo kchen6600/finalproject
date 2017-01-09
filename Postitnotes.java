@@ -135,6 +135,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     private void openFile(String filename){
 	try{
 	    current = filename;
+	    titlebar.setText(filename);
 	    FileReader r = new FileReader("postitnotes/"+filename+".txt");
 	    textBody.read(r, null);
 	    // this.setTitle(filename);
