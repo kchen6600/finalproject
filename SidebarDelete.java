@@ -82,11 +82,13 @@ public class SidebarDelete extends JFrame implements ActionListener{
 		   }
 		**/
 		Sidebar hello = new Sidebar();
+		hello.setVisible(true);
 		    
 	    }
 	}
 	if(event.equals("cancel")){
 	    Sidebar hi = new Sidebar();
+	    hi.setVisible(true);
 	}	    
     }
 
