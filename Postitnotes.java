@@ -115,22 +115,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     //save file
     private void saveFile(String filename){
 	try{
-	    /**
-	    BufferedWriter w = new BufferedWriter(new FileWriter("../postitnotes/"+filename+".txt"));
-	    //need to figue out how to save it in special "notes" folder
-	    textBody.write(w);
-	    w.close();
-	    this.setTitle(filename);
-	    ifSaved = true;
-	    ifChanged = false;
-	    //System.out.println("File saved!") This might have to do with GUI stuff
-	    b.setEnabled(ifChanged);
-	}
-	catch (IOException e){
-	    e.printStackTrace();
-	    //System.out.println("File could not be saved, file is open elsewhere, etc.") This might have to do with GUI stuff
-	}
-	     **/
+	   
 	    FileWriter writer = new FileWriter("postitnotes/"+filename+".txt");
 	    System.out.println("Writer created!");
 	    textBody.write(writer);
