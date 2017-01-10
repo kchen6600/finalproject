@@ -64,9 +64,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	//tts = new JButton("Text-to-Speech");
 	//tts.addActionListener(this);
 	//tts.setActionCommand("tts");
-	
-	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
-	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
+	textBody.setFont(new Font("Serif",Font.PLAIN,12));
+	titlebar.setFont(new Font("Serif",Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	
 	pane.add(titlelabel);
@@ -111,7 +110,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addItem("DialogInput");
 	fontselection.addActionListener(this);
 	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
-	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
+       	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	
 	pane.add(titlelabel);
@@ -120,6 +119,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(textBody);
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
+	pane.add(fontselection);
 
 	openFile(filename);
 	
@@ -176,6 +176,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    ifOpened = true;
 	    ifChanged = false;
 	    //file opens
+	    //need to figure out how to save font previously chosen too
 	}
 	catch(IOException e){
 	    e.printStackTrace();
