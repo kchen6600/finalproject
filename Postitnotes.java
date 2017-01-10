@@ -18,6 +18,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     private JTextArea textBody;
     private JTextField titlebar;
     private JComboBox fontselection;
+    private JComboBox colorselection;
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
@@ -40,6 +41,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
+	
 	fontselection = new JComboBox();
 	fontselection.setEditable(true);
 	fontselection.addItem("Serif");
@@ -48,7 +50,17 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addItem("Dialog");
 	fontselection.addItem("DialogInput");
 	fontselection.addActionListener(this);
-
+	fontselection.setActionCommand("fontsel");
+	
+	colorselection = new JComboBox();
+	colorselection.setEditable(true);
+	colorselection.addItem("white");
+	colorselection.addItem("yellow");
+	colorselection.addItem("blue");
+	colorselection.addItem("black");
+	colorselection.addItem("red");
+	colorselection.addActionListener(this);
+	colorselection.setActionCommand("colorsel");
 	//fontselection.setSelectedItem(0);
         
 	//tts = new JButton("Text-to-Speech");
@@ -190,10 +202,21 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    }
 	}
 
-	JComboBox selection = (JComboBox) ev.getSource();
-	String fontchosen = (String) selection.getSelectedItem();
-	textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
-	titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
+	if (event.equals("fontsel")){
+	    System.out.println("Font selected");
+	    JComboBox selection = (JComboBox) ev.getSource();
+	    String fontchosen = (String) selection.getSelectedItem();
+	    textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
+	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
+	    System.out.println("Font set");
+	}
+	if (event.equals("colorsel")){
+	    System.out.println("Color selected");
+	    JComboBox colselection = (JComboBox) ev.getSource();
+	    Color colorchosen = (Color)colselection.getSelectedItem();
+	    this.setBackground(Color.colorchosen);
+	}
+	
 	//text to speech
 	/**
 	if(event.equals("tts")){
