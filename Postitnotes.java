@@ -2,50 +2,70 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Font;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.text.*;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 //import com.sun.speech.freetts.*;
 
 public class Postitnotes extends JFrame implements ActionListener {
 
-    
     private Container pane;
     private JLabel textlabel, titlelabel;
     private JButton b, tts;
     private JTextArea textBody;
     private JTextField titlebar;
+    private JComboBox fontselection;
+    private JComboBox colorselection;
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
 
     private String current = "Untitled";
 
+    //String fontfamilies[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
-
+    Color[] colorchoices = {Color.white, Color.blue, Color.red, Color.black, Color.green, Color.yellow};
     public Postitnotes() {
 	this.setTitle("CREATE NEW NOTE");
 	this.setSize(600,300);
 	this.setLocation(100,100);
-	//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         b = new JButton("save");
 	b.addActionListener(this);
 	b.setActionCommand("save");
-	//b2.addActionListener(this);
 	titlebar = new JTextField(10);
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
+	
+	fontselection = new JComboBox();
+	fontselection.setEditable(true);
+	fontselection.addItem("Serif");
+	fontselection.addItem("SansSerif");
+	fontselection.addItem("Monospaced");
+	fontselection.addItem("Dialog");
+	fontselection.addItem("DialogInput");
+	fontselection.addActionListener(this);
+	fontselection.setActionCommand("fontsel");
+	/**
+	colorselection = new JComboBox(colorchoices);
+	colorselection.setMaximumRowCount(7);
+	colorselection.setEditable(true);
+	colorselection.addActionListener(this);
+	colorselection.setActionCommand("colorsel");
+	**/
+	//fontselection.setSelectedItem(0);
+        
 	//tts = new JButton("Text-to-Speech");
 	//tts.addActionListener(this);
 	//tts.setActionCommand("tts");
-	
-	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
-	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
+	textBody.setFont(new Font("Serif",Font.PLAIN,12));
+	titlebar.setFont(new Font("Serif",Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	
 	pane.add(titlelabel);
@@ -54,11 +74,14 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(textBody);
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
+	pane.add(fontselection);
+	//	pane.add(colorselection);
 	//pane.add(tts);
 	
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
+
 	setTitle(current);
 	setVisible(true);
        
@@ -68,21 +91,26 @@ public class Postitnotes extends JFrame implements ActionListener {
     public Postitnotes(String filename) {
 	this.setSize(600,300);
 	this.setLocation(100,100);
-	//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         b = new JButton("save");
 	b.addActionListener(this);
 	b.setActionCommand("save");
-	//b2.addActionListener(this);
 	titlebar = new JTextField(10);
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
-	
+	fontselection = new JComboBox();
+	fontselection.setEditable(true);
+	fontselection.addItem("Serif");
+	fontselection.addItem("SansSerif");
+	fontselection.addItem("Monospaced");
+	fontselection.addItem("Dialog");
+	fontselection.addItem("DialogInput");
+	fontselection.addActionListener(this);
 	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
-	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
+       	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	
 	pane.add(titlelabel);
@@ -91,6 +119,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(textBody);
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
+	pane.add(fontselection);
 
 	openFile(filename);
 	
@@ -110,7 +139,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 		}
 	};
 
-         private KeyListener k2 = new KeyAdapter() {
+     private KeyListener k2 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
 		       	b.setEnabled(ifChanged);
@@ -121,22 +150,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     //save file
     private void saveFile(String filename){
 	try{
-	    /**
-	    BufferedWriter w = new BufferedWriter(new FileWriter("../postitnotes/"+filename+".txt"));
-	    //need to figue out how to save it in special "notes" folder
-	    textBody.write(w);
-	    w.close();
-	    this.setTitle(filename);
-	    ifSaved = true;
-	    ifChanged = false;
-	    //System.out.println("File saved!") This might have to do with GUI stuff
-	    b.setEnabled(ifChanged);
-	}
-	catch (IOException e){
-	    e.printStackTrace();
-	    //System.out.println("File could not be saved, file is open elsewhere, etc.") This might have to do with GUI stuff
-	}
-	     **/
+	   
 	    FileWriter writer = new FileWriter("postitnotes/"+filename+".txt");
 	    System.out.println("Writer created!");
 	    textBody.write(writer);
@@ -156,16 +170,16 @@ public class Postitnotes extends JFrame implements ActionListener {
     private void openFile(String filename){
 	try{
 	    current = filename;
+	    titlebar.setText(filename);
 	    FileReader r = new FileReader("postitnotes/"+filename+".txt");
 	    textBody.read(r, null);
-	    // this.setTitle(filename);
 	    ifOpened = true;
 	    ifChanged = false;
 	    //file opens
+	    //need to figure out how to save font previously chosen too
 	}
 	catch(IOException e){
 	    e.printStackTrace();
-	    //System.out.println("Could not open, file does not exist, etc.") This might have to do with GUI stuff
 	}
     }
 
@@ -188,6 +202,24 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    }
 	}
 
+	if (event.equals("fontsel")){
+	    System.out.println("Font selected");
+	    JComboBox selection = (JComboBox) ev.getSource();
+	    String fontchosen = (String) selection.getSelectedItem();
+	    textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
+	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
+	    System.out.println("Font set");
+	}
+	/**
+	if (event.equals("colorsel")){
+	    System.out.println("Color selected");
+	    JComboBox colselection = (JComboBox) ev.getSource();
+	    Object colorchosen = colselection.getSelectedItem();
+	    this.setBackground((Color)colorchosen);
+	    System.out.println("Background color set");
+	}
+	**/
+	
 	//text to speech
 	/**
 	if(event.equals("tts")){
