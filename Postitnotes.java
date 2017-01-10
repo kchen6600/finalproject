@@ -6,17 +6,19 @@ import java.io.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.JOptionPane;
+//import com.sun.speech.freetts.*;
 
 public class Postitnotes extends JFrame implements ActionListener {
 
     
     private Container pane;
     private JLabel textlabel, titlelabel;
-    private JButton b;
+    private JButton b, tts;
     private JTextArea textBody;
     private JTextField titlebar;
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
+    private static final String voicename = "kevin16";
 
     private String current = "Untitled";
 
@@ -38,6 +40,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
+	//tts = new JButton("Text-to-Speech");
+	//tts.addActionListener(this);
+	//tts.setActionCommand("tts");
 	
 	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
 	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
@@ -49,6 +54,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(textBody);
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
+	//pane.add(tts);
 	
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -163,6 +169,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	}
     }
 
+    
+
     public void actionPerformed(ActionEvent ev){
 	//click save button -> saves file
 	String event = ev.getActionCommand();
@@ -179,8 +187,25 @@ public class Postitnotes extends JFrame implements ActionListener {
 		saveFile(current);
 	    }
 	}
+
+	//text to speech
+	/**
+	if(event.equals("tts")){
+	    Voice voice;
+	    Voicemanager vm = VoiceManager.getInstance();
+	    voice = vm.getVoice(voicename);
+	    voice.allocate();
+	    try{
+		voice.speak(textBody.getText());
+	    }catch(Exception e){
+	    }
+	    
+	}
+	**/
 	    
     }
+
+
 
     //getters and setters will be here (if needed for sidebar or texteditor)
     public static void main (String[]args){
