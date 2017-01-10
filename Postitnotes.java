@@ -28,14 +28,12 @@ public class Postitnotes extends JFrame implements ActionListener {
 	this.setTitle("CREATE NEW NOTE");
 	this.setSize(600,300);
 	this.setLocation(100,100);
-	//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         b = new JButton("save");
 	b.addActionListener(this);
 	b.setActionCommand("save");
-	//b2.addActionListener(this);
 	titlebar = new JTextField(10);
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
@@ -68,14 +66,12 @@ public class Postitnotes extends JFrame implements ActionListener {
     public Postitnotes(String filename) {
 	this.setSize(600,300);
 	this.setLocation(100,100);
-	//this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         b = new JButton("save");
 	b.addActionListener(this);
 	b.setActionCommand("save");
-	//b2.addActionListener(this);
 	titlebar = new JTextField(10);
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
@@ -144,14 +140,12 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    titlebar.setText(filename);
 	    FileReader r = new FileReader("postitnotes/"+filename+".txt");
 	    textBody.read(r, null);
-	    // this.setTitle(filename);
 	    ifOpened = true;
 	    ifChanged = false;
 	    //file opens
 	}
 	catch(IOException e){
 	    e.printStackTrace();
-	    //System.out.println("Could not open, file does not exist, etc.") This might have to do with GUI stuff
 	}
     }
 
