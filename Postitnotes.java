@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.GraphicsEnvironment;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.text.*;
@@ -10,19 +11,20 @@ import javax.swing.JOptionPane;
 
 public class Postitnotes extends JFrame implements ActionListener {
 
-    
     private Container pane;
     private JLabel textlabel, titlelabel;
     private JButton b, tts;
     private JTextArea textBody;
     private JTextField titlebar;
+    private JComboBox fontselection;
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
 
     private String current = "Untitled";
 
-
+    GraphicsEnvironment graphenv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    String[] fontfamilies = graphenv.getAvailableFontFamilyNames();
 
     public Postitnotes() {
 	this.setTitle("CREATE NEW NOTE");
@@ -38,6 +40,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
+	fontselection = new JComboBox(fontfamilies);
+	fontselection.setSelectedItem(0);
+        
 	//tts = new JButton("Text-to-Speech");
 	//tts.addActionListener(this);
 	//tts.setActionCommand("tts");
@@ -52,11 +57,13 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(textBody);
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
+	pane.add(fontselection);
 	//pane.add(tts);
 	
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
+	fontselection.addItemListener(i1);
 	setTitle(current);
 	setVisible(true);
        
@@ -106,13 +113,14 @@ public class Postitnotes extends JFrame implements ActionListener {
 		}
 	};
 
-         private KeyListener k2 = new KeyAdapter() {
+     private KeyListener k2 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
 		       	b.setEnabled(ifChanged);
 		}
 	};
 
+    
     
     //save file
     private void saveFile(String filename){
