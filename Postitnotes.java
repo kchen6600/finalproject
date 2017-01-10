@@ -2,10 +2,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.GraphicsEnvironment;
+import java.awt.Font;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.text.*;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 //import com.sun.speech.freetts.*;
 
@@ -23,8 +24,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 
     private String current = "Untitled";
 
-    GraphicsEnvironment graphenv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    String[] fontfamilies = graphenv.getAvailableFontFamilyNames();
+    //String fontfamilies[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
     public Postitnotes() {
 	this.setTitle("CREATE NEW NOTE");
@@ -40,8 +40,16 @@ public class Postitnotes extends JFrame implements ActionListener {
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
-	fontselection = new JComboBox(fontfamilies);
-	fontselection.setSelectedItem(0);
+	fontselection = new JComboBox();
+	fontselection.setEditable(true);
+	fontselection.addItem("Serif");
+	fontselection.addItem("SansSerif");
+	fontselection.addItem("Monospaced");
+	fontselection.addItem("Dialog");
+	fontselection.addItem("DialogInput");
+	fontselection.addActionListener(this);
+
+	//fontselection.setSelectedItem(0);
         
 	//tts = new JButton("Text-to-Speech");
 	//tts.addActionListener(this);
@@ -63,7 +71,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
-	fontselection.addItemListener(i1);
+
 	setTitle(current);
 	setVisible(true);
        
@@ -83,7 +91,14 @@ public class Postitnotes extends JFrame implements ActionListener {
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
-	
+	fontselection = new JComboBox();
+	fontselection.setEditable(true);
+	fontselection.addItem("Serif");
+	fontselection.addItem("SansSerif");
+	fontselection.addItem("Monospaced");
+	fontselection.addItem("Dialog");
+	fontselection.addItem("DialogInput");
+	fontselection.addActionListener(this);
 	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
 	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -120,7 +135,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 		}
 	};
 
-    
     
     //save file
     private void saveFile(String filename){
@@ -176,6 +190,10 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    }
 	}
 
+	JComboBox selection = (JComboBox) ev.getSource();
+	String fontchosen = (String) selection.getSelectedItem();
+	textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
+	titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
 	//text to speech
 	/**
 	if(event.equals("tts")){
