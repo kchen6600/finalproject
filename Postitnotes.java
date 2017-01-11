@@ -1,3 +1,7 @@
+//
+//MUST COMPILE WITH .:jar/*
+//
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyEvent;
@@ -8,7 +12,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-//import com.sun.speech.freetts.*;
+import com.sun.speech.freetts.*;
 
 public class Postitnotes extends JFrame implements ActionListener {
 
@@ -61,9 +65,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	**/
 	//fontselection.setSelectedItem(0);
         
-	//tts = new JButton("Text-to-Speech");
-	//tts.addActionListener(this);
-	//tts.setActionCommand("tts");
+	tts = new JButton("Text-to-Speech");
+	tts.addActionListener(this);
+	tts.setActionCommand("tts");
 	textBody.setFont(new Font("Serif",Font.PLAIN,12));
 	titlebar.setFont(new Font("Serif",Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -76,7 +80,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(b);
 	pane.add(fontselection);
 	//	pane.add(colorselection);
-	//pane.add(tts);
+	pane.add(tts);
 	
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -112,6 +116,10 @@ public class Postitnotes extends JFrame implements ActionListener {
 	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
        	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+       	tts = new JButton("Text-to-Speech");
+	tts.addActionListener(this);
+	tts.setActionCommand("tts");
 	
 	pane.add(titlelabel);
 	pane.add(titlebar);
@@ -120,6 +128,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
 	pane.add(fontselection);
+	pane.add(tts);
 
 	openFile(filename);
 	
@@ -221,19 +230,15 @@ public class Postitnotes extends JFrame implements ActionListener {
 	**/
 	
 	//text to speech
-	/**
+	
 	if(event.equals("tts")){
 	    Voice voice;
-	    Voicemanager vm = VoiceManager.getInstance();
+	    VoiceManager vm = VoiceManager.getInstance();
 	    voice = vm.getVoice(voicename);
 	    voice.allocate();
-	    try{
-		voice.speak(textBody.getText());
-	    }catch(Exception e){
-	    }
-	    
+	    voice.speak(textBody.getText());	    
 	}
-	**/
+	
 	    
     }
 
