@@ -210,6 +210,12 @@ public class Postitnotes extends JFrame implements ActionListener {
 		setTitle(current);
 		System.out.println(ifChanged);
 	    }
+	    if (new File("postitnotes/"+current+".txt").exists()){
+		int confirm = JOptionPane.showConfirmDialog(pane, "Would you like to override the existing note?");
+		if(confirm == JOptionPane.YES_OPTION){
+		    saveFile(current);
+		}
+	    }
 	    else{
 		saveFile(current);
 	    }
