@@ -23,6 +23,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     private JTextField titlebar;
     private JComboBox fontselection;
     private JComboBox colorselection;
+    private String fontchosen;
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
@@ -105,6 +106,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
+	
 	fontselection = new JComboBox();
 	fontselection.setEditable(true);
 	fontselection.addItem("Serif");
@@ -113,8 +115,10 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addItem("Dialog");
 	fontselection.addItem("DialogInput");
 	fontselection.addActionListener(this);
-	textBody.setFont(new Font("Monospaced",Font.PLAIN,12));
-       	titlebar.setFont(new Font("Monospaced",Font.PLAIN,12));
+	fontselection.setActionCommand("fontsel");
+	//	fontselection.setSelectedItem(fontchosen);
+       	textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
+       	titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
        	tts = new JButton("Text-to-Speech");
@@ -206,6 +210,12 @@ public class Postitnotes extends JFrame implements ActionListener {
 		setTitle(current);
 		System.out.println(ifChanged);
 	    }
+	    if (new File("postitnotes/"+current+".txt").exists()){
+		int confirm = JOptionPane.showConfirmDialog(pane, "Would you like to override the existing note?");
+		if(confirm == JOptionPane.YES_OPTION){
+		    saveFile(current);
+		}
+	    }
 	    else{
 		saveFile(current);
 	    }
@@ -214,10 +224,13 @@ public class Postitnotes extends JFrame implements ActionListener {
 	if (event.equals("fontsel")){
 	    System.out.println("Font selected");
 	    JComboBox selection = (JComboBox) ev.getSource();
-	    String fontchosen = (String) selection.getSelectedItem();
+	    fontchosen = (String) selection.getSelectedItem();
 	    textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
 	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
 	    System.out.println("Font set");
+	    ifChanged = true;
+	    b.setEnabled(ifChanged);
+	    System.out.println(ifChanged);
 	}
 	/**
 	if (event.equals("colorsel")){
