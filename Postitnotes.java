@@ -106,6 +106,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
+	
 	fontselection = new JComboBox();
 	fontselection.setEditable(true);
 	fontselection.addItem("Serif");
@@ -114,7 +115,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addItem("Dialog");
 	fontselection.addItem("DialogInput");
 	fontselection.addActionListener(this);
-	textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
+	fontselection.setActionCommand("fontsel");
+	//	fontselection.setSelectedItem(fontchosen);
+       	textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
        	titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -219,6 +222,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
 	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
 	    System.out.println("Font set");
+	    ifChanged = true;
+	    b.setEnabled(ifChanged);
+	    System.out.println(ifChanged);
 	}
 	/**
 	if (event.equals("colorsel")){
