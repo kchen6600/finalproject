@@ -19,7 +19,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     private Container pane;
     private JLabel textlabel, titlelabel;
     private JButton b, tts;
-    private JTextArea textBody;
+    private JTextPane textBody;
     private JTextField titlebar;
     private JComboBox fontselection;
     private JComboBox colorselection;
@@ -45,7 +45,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	b.setActionCommand("save");
 	titlebar = new JTextField(10);
 	titlelabel = new JLabel("TITLE: ");
-	textBody = new JTextArea(10,60);
+	textBody = new JTextPane();
+	textBody.setSize(10,60);
 	textlabel = new JLabel("TEXT: ");
 	
 	fontselection = new JComboBox();
@@ -110,7 +111,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	b.setActionCommand("save");
 	titlebar = new JTextField(10);
 	titlelabel = new JLabel("TITLE: ");
-	textBody = new JTextArea(10,60);
+	textBody = new JTextPane();
+	textBody.setSize(10,60);
 	textlabel = new JLabel("TEXT: ");
 	
 	fontselection = new JComboBox();
