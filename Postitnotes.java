@@ -85,7 +85,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(b);
 	pane.add(fontselection);
 	
-       	pane.add(colorselection);
+       	//pane.add(colorselection);
 	
 	pane.add(tts);
 
