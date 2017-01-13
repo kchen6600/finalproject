@@ -30,9 +30,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 
     private String current = "Untitled";
 
-    //String fontfamilies[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-
-    Color[] colorchoices = {Color.white, Color.blue, Color.red, Color.black, Color.green, Color.yellow};
     public Postitnotes() {
 	this.setTitle("CREATE NEW NOTE");
 	this.setSize(600,300);
@@ -58,15 +55,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addActionListener(this);
 	fontselection.setActionCommand("fontsel");
 
-	/**
-	
-	colorselection = new JComboBox(colorchoices);
-	colorselection.setMaximumRowCount(7);
-	colorselection.setEditable(true);
-	colorselection.addActionListener(this);
-	colorselection.setActionCommand("colorsel");
-
-	**/
 	
 	//fontselection.setSelectedItem(0);
         
@@ -85,7 +73,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(b);
 	pane.add(fontselection);
 	
-       	//pane.add(colorselection);
 	
 	pane.add(tts);
 
@@ -237,15 +224,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    b.setEnabled(ifChanged);
 	    System.out.println(ifChanged);
 	}
-	/**
-	if (event.equals("colorsel")){
-	    System.out.println("Color selected");
-	    JComboBox colselection = (JComboBox) ev.getSource();
-	    Object colorchosen = colselection.getSelectedItem();
-	    // this.setBackground(Color.RED);
-	    System.out.println("Background color set");
-	}
-	**/
 	
 	
 	//text to speech
