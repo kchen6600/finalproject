@@ -22,8 +22,9 @@ public class Postitnotes extends JFrame implements ActionListener {
     private JTextArea textBody;
     private JTextField titlebar;
     private JComboBox fontselection;
-    private JComboBox colorselection;
+    private JComboBox fontsizeselection;
     private String fontchosen;
+    private Integer fontsizechosen;
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
@@ -55,8 +56,24 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addActionListener(this);
 	fontselection.setActionCommand("fontsel");
 	fontselection.setSelectedItem("Serif");
+
+		
+	fontsizeselection = new JComboBox();
+	fontsizeselection.setEditable(true);
+	fontsizeselection.addItem("12");
+	fontsizeselection.addItem("14");
+	fontsizeselection.addItem("16");
+	fontsizeselection.addItem("18");
+	fontsizeselection.addItem("20");
+       	fontsizeselection.addItem("22");
+	fontsizeselection.addItem("24");
+	fontsizeselection.addItem("26");
+	fontsizeselection.addItem("28");
+	fontsizeselection.addItem("30");
+	fontsizeselection.addActionListener(this);
+	fontsizeselection.setActionCommand("fontsizesel");
+	fontsizeselection.setSelectedItem("12");
 	
-	//fontselection.setSelectedItem(0);
         
 	tts = new JButton("Text-to-Speech");
 	tts.addActionListener(this);
@@ -72,6 +89,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
 	pane.add(fontselection);
+	pane.add(new JSeparator(SwingConstants.VERTICAL));
+	pane.add(fontsizeselection);
 	
 	
 	pane.add(tts);
@@ -223,6 +242,19 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
 	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
 	    System.out.println("Font set");
+	    ifChanged = true;
+	    b.setEnabled(ifChanged);
+	    System.out.println(ifChanged);
+	}
+
+	
+	if (event.equals("fontsizesel")){
+	    System.out.println("Font size selected");
+	    JComboBox selection = (JComboBox) ev.getSource();
+	    fontsizechosen = Integer.parseInt((String)selection.getSelectedItem());
+	    textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
+	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
+	    System.out.println("Font size set");
 	    ifChanged = true;
 	    b.setEnabled(ifChanged);
 	    System.out.println(ifChanged);
