@@ -122,22 +122,40 @@ public class Postitnotes extends JFrame implements ActionListener {
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextArea(10,60);
 	textlabel = new JLabel("TEXT: ");
-	
-	fontselection = new JComboBox();
+
+		fontselection = new JComboBox();
 	fontselection.setEditable(true);
+	fontselection.addItem("Font Family");
 	fontselection.addItem("Serif");
 	fontselection.addItem("SansSerif");
 	fontselection.addItem("Monospaced");
 	fontselection.addItem("Dialog");
 	fontselection.addItem("DialogInput");
-        
 	fontselection.addActionListener(this);
 	fontselection.setActionCommand("fontsel");
+	fontselection.setSelectedItem("Font Family");
 
-	fontselection.setSelectedItem(fontchosen);
+		
+	fontsizeselection = new JComboBox();
+	fontsizeselection.setEditable(true);
+	fontsizeselection.addItem("Font Size");
+	fontsizeselection.addItem("12");
+	fontsizeselection.addItem("14");
+	fontsizeselection.addItem("16");
+	fontsizeselection.addItem("18");
+	fontsizeselection.addItem("20");
+       	fontsizeselection.addItem("22");
+	fontsizeselection.addItem("24");
+	fontsizeselection.addItem("26");
+	fontsizeselection.addItem("28");
+	fontsizeselection.addItem("30");
+	fontsizeselection.addActionListener(this);
+	fontsizeselection.setActionCommand("fontsizesel");
+	fontsizeselection.setSelectedItem("Font Size");
+        
 
-	textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
-       	titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
+	textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
+       	titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
        	tts = new JButton("Text-to-Speech");
@@ -151,6 +169,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
 	pane.add(fontselection);
+	pane.add(new JSeparator(SwingConstants.VERTICAL));
+	pane.add(fontsizeselection);
 	pane.add(tts);
 
 	openFile(filename);
