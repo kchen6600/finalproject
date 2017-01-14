@@ -48,6 +48,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	
 	fontselection = new JComboBox();
 	fontselection.setEditable(true);
+	fontselection.addItem("Font Family");
 	fontselection.addItem("Serif");
 	fontselection.addItem("SansSerif");
 	fontselection.addItem("Monospaced");
@@ -55,11 +56,13 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addItem("DialogInput");
 	fontselection.addActionListener(this);
 	fontselection.setActionCommand("fontsel");
-	fontselection.setSelectedItem("Serif");
+	fontchosen = "Serif";
+	fontselection.setSelectedItem("Font Family");
 
 		
 	fontsizeselection = new JComboBox();
 	fontsizeselection.setEditable(true);
+	fontsizeselection.addItem("Font Size");
 	fontsizeselection.addItem("12");
 	fontsizeselection.addItem("14");
 	fontsizeselection.addItem("16");
@@ -72,7 +75,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontsizeselection.addItem("30");
 	fontsizeselection.addActionListener(this);
 	fontsizeselection.setActionCommand("fontsizesel");
-	fontsizeselection.setSelectedItem("12");
+	fontsizechosen = 12;
+	fontsizeselection.setSelectedItem("Font Size");
 	
         
 	tts = new JButton("Text-to-Speech");
@@ -239,8 +243,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    System.out.println("Font selected");
 	    JComboBox selection = (JComboBox) ev.getSource();
 	    fontchosen = (String) selection.getSelectedItem();
-	    textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
-	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
+	    textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
+	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
 	    System.out.println("Font set");
 	    ifChanged = true;
 	    b.setEnabled(ifChanged);
