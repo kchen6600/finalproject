@@ -54,7 +54,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addItem("DialogInput");
 	fontselection.addActionListener(this);
 	fontselection.setActionCommand("fontsel");
-
+	fontselection.setSelectedItem("Serif");
 	
 	//fontselection.setSelectedItem(0);
         
@@ -107,10 +107,13 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addItem("Monospaced");
 	fontselection.addItem("Dialog");
 	fontselection.addItem("DialogInput");
+        
 	fontselection.addActionListener(this);
 	fontselection.setActionCommand("fontsel");
-	//	fontselection.setSelectedItem(fontchosen);
-       	textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
+
+	fontselection.setSelectedItem(fontchosen);
+
+	textBody.setFont(new Font(fontchosen,Font.PLAIN,12));
        	titlebar.setFont(new Font(fontchosen,Font.PLAIN,12));
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
