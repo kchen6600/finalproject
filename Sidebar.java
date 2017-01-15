@@ -36,8 +36,10 @@ public class Sidebar extends JFrame implements ActionListener{
 	delete.setMaximumSize(new Dimension(130,35));
 	delete.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+	sidebar.add(Box.createRigidArea(new Dimension(20, 20)));
 	sidebar.add(newNote);
 	sidebar.add(delete);
+	sidebar.add(Box.createRigidArea(new Dimension(30, 30)));
 
        
 	//parse through file names and list all titles
@@ -56,11 +58,10 @@ public class Sidebar extends JFrame implements ActionListener{
 		    fileOnSidebar.setActionCommand("txt" + fileName);
 		    fileOnSidebar.setFont(new Font("Verdana", Font.PLAIN, 15));
 		    fileOnSidebar.setMaximumSize(new Dimension(250,20));
-		    fileOnSidebar.setBorderPainted(false);
-		    fileOnSidebar.setFocusPainted(false);
+      		    fileOnSidebar.setFocusPainted(false);
 		    fileOnSidebar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		    if(counter%2 != 0){
-			fileOnSidebar.setBackground(Color.lightGray);
+			fileOnSidebar.setBackground(Color.WHITE);
 		    }
 		    else{
 			fileOnSidebar.setBackground(Color.BLUE);
@@ -73,6 +74,8 @@ public class Sidebar extends JFrame implements ActionListener{
 	else{
 	    System.out.println("File don't work");
 	}
+
+	setVisible(true);
 	
 
 	//how are timestamps organized in files??
@@ -83,6 +86,7 @@ public class Sidebar extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	if(event.equals("newNote")){
+	    setVisible(false);
 	    Postitnotes postit = new Postitnotes();
        	}
 	
@@ -91,14 +95,13 @@ public class Sidebar extends JFrame implements ActionListener{
 	}
 
 	if(event.equals("delete")){
+	    setVisible(false);
 	    SidebarDelete deleteNotes = new SidebarDelete();
-	    deleteNotes.setVisible(true);
 	}
     }
     
     public static void main(String[] args){
 	Sidebar hi = new Sidebar();
-	hi.setVisible(true);
     }
 
 }
