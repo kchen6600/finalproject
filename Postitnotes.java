@@ -14,12 +14,14 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import com.sun.speech.freetts.*;
+import javax.swing.text.html.*;
+import javax.swing.filechooser.*;
 
 public class Postitnotes extends JFrame implements ActionListener {
 
     private Container pane;
     private JLabel textlabel, titlelabel, timestamp;
-    private JButton b, tts;
+    private JButton b, tts, bullets, picture;
     private JTextPane textBody;
     private JTextField titlebar;
     private JComboBox fontselection;
@@ -30,9 +32,8 @@ public class Postitnotes extends JFrame implements ActionListener {
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
-
     private String current = "Untitled";
-
+    
     public Postitnotes() {
 	this.setTitle("CREATE NEW NOTE");
 	this.setSize(600,300);
@@ -75,10 +76,21 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontsizeselection.addItem("30");
 	fontsizeselection.addActionListener(this);
 	fontsizeselection.setActionCommand("fontsizesel");
-	
+
+	//bullets feature is glitchy
+	textBody.setEditorKit(new HTMLEditorKit());
+	HTMLEditorKit.InsertHTMLTextAction bulletAction = new HTMLEditorKit.InsertHTMLTextAction("Bullets", "<li> </li>", HTML.Tag.BODY, HTML.Tag.UL);  
+	bullets = new JButton(bulletAction);
+	textBody.setText(textBody.getText());
+	textBody.repaint();
+	//tts button
 	tts = new JButton("Text-to-Speech");
 	tts.addActionListener(this);
 	tts.setActionCommand("tts");
+	//upload picture
+	picture = new JButton("Upload picture");
+	picture.addActionListener(this);
+	picture.setActionCommand("picture");
 	textBody.setFont(new Font("Serif",Font.PLAIN,12));
 	titlebar.setFont(new Font("Serif",Font.PLAIN,12));
 	fontchosen = "Serif";
@@ -97,6 +109,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 	
 	pane.add(tts);
+	pane.add(bullets);
+	pane.add(picture);
 	pane.add(timestamp);
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -161,9 +175,20 @@ public class Postitnotes extends JFrame implements ActionListener {
         
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-       	tts = new JButton("Text-to-Speech");
+	//bullets feature is glitchy
+	textBody.setEditorKit(new HTMLEditorKit());
+	HTMLEditorKit.InsertHTMLTextAction bulletAction = new HTMLEditorKit.InsertHTMLTextAction("Bullets", "<li> </li>", HTML.Tag.BODY, HTML.Tag.UL);  
+	bullets = new JButton(bulletAction);
+	textBody.setText(textBody.getText());
+	textBody.repaint();
+	//tts button
+	tts = new JButton("Text-to-Speech");
 	tts.addActionListener(this);
 	tts.setActionCommand("tts");
+	//upload picture
+	picture = new JButton("Upload picture");
+	picture.addActionListener(this);
+	picture.setActionCommand("picture");
 	
 	pane.add(titlelabel);
 	pane.add(titlebar);
@@ -174,7 +199,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(fontselection);
 	pane.add(fontsizeselection);
 	pane.add(tts);
-
+	pane.add(bullets);
+	pane.add(picture);
 	pane.add(timestamp);
 	openFile(filename);
         
@@ -296,9 +322,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    b.setEnabled(ifChanged);
 	    System.out.println(ifChanged);
 	}
-	
-	//text to speech
-	
+		
 	if(event.equals("tts")){
 	    Voice voice;
 	    VoiceManager vm = VoiceManager.getInstance();
@@ -306,10 +330,31 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    voice.allocate();
 	    voice.speak(textBody.getText());	    
 	}
-	
+
+	if(event.equals("picture")){
+	    JFileChooser file = new JFileChooser();
+	    file.setDialogTitle("Choose Picture");
+	    file.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+	    file.setCurrentDirectory(new File(System.getProperty("user.home")));
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Image", "jpg", "gif", "png");
+	    file.addChoosableFileFilter(filter);
+	    file.setAcceptAllFileFilterUsed(false);
+	    int result = file.showSaveDialog(null);
+	    if(result == JFileChooser.APPROVE_OPTION){
+		File selectedFile = file.getSelectedFile();
+		String path = selectedFile.getAbsolutePath();
+		ImageIcon myPic = new ImageIcon(path);
+		Image img = myPic.getImage();
+		Image newimg = img.getScaledInstance(textBody.getWidth(), textBody.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon image = new ImageIcon(newimg);
+		textBody.insertIcon(image);
+	    }
+	    else if(result == JFileChooser.CANCEL_OPTION){
+		System.out.println("No File Select");
+	    }
+	}
 	    
     }
-
 
 
     //getters and setters will be here (if needed for sidebar or texteditor)
