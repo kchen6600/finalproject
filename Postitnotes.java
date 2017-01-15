@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import java.text.SimpleDateFormat;
 import com.sun.speech.freetts.*;
 
 public class Postitnotes extends JFrame implements ActionListener {
@@ -25,6 +26,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     private JComboBox fontsizeselection;
     private String fontchosen;
     private Integer fontsizechosen;
+    private String lastmod;
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
@@ -206,10 +208,11 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    writer.close();
 	    current = filename;
 	    setTitle(current);
-	    //fontchosen = (String) fontselection.getSelectedItem();
-	    System.out.println(fontchosen);
-	    //fontsizechosen = Integer.parseInt((String)fontsizeselection.getSelectedItem());
-	    System.out.println(fontsizechosen);
+
+	    
+	    File f = new File("postitnotes/"+current+".txt");
+	    SimpleDateFormat formatting = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	    System.out.println(formatting.format(f.lastModified()));
 	    ifChanged = false;
 	    b.setEnabled(false);
 	}
