@@ -18,7 +18,7 @@ import com.sun.speech.freetts.*;
 public class Postitnotes extends JFrame implements ActionListener {
 
     private Container pane;
-    private JLabel textlabel, titlelabel;
+    private JLabel textlabel, titlelabel, timestamp;
     private JButton b, tts;
     private JTextPane textBody;
     private JTextField titlebar;
@@ -49,7 +49,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	textBody = new JTextPane();
 	textBody.setSize(10,60);
 	textlabel = new JLabel("TEXT: ");
-	
+	lastmod = "Not saved";
+	timestamp = new JLabel(lastmod);
 	fontselection = new JComboBox();
 	fontselection.setEditable(true);
 	fontselection.addItem("Serif");
@@ -96,7 +97,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 	
 	pane.add(tts);
-
+	pane.add(timestamp);
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
@@ -123,6 +124,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	textBody.setSize(10,60);
 	textlabel = new JLabel("TEXT: ");
 
+	timestamp = new JLabel(lastmod);
        	fontselection = new JComboBox();
 	fontselection.setEditable(true);
 	fontselection.addItem("Serif");
@@ -173,7 +175,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(fontsizeselection);
 	pane.add(tts);
 
+	pane.add(timestamp);
 	openFile(filename);
+        
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
@@ -212,7 +216,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    
 	    File f = new File("postitnotes/"+current+".txt");
 	    SimpleDateFormat formatting = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-	    System.out.println(formatting.format(f.lastModified()));
+	    lastmod = formatting.format(f.lastModified());
+	    System.out.println(lastmod);
 	    ifChanged = false;
 	    b.setEnabled(false);
 	}
@@ -264,6 +269,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    else{
 		saveFile(current);
 	    }
+	    timestamp.setText(lastmod);
 	}
 
 	if (event.equals("fontsel")){
@@ -309,6 +315,6 @@ public class Postitnotes extends JFrame implements ActionListener {
     //getters and setters will be here (if needed for sidebar or texteditor)
     public static void main (String[]args){
 	Postitnotes b = new Postitnotes();
-       	Postitnotes c = new Postitnotes("hello");
+       	Postitnotes c = new Postitnotes("anotha");
     }
 }
