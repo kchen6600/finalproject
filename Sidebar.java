@@ -11,7 +11,7 @@ public class Sidebar extends JFrame implements ActionListener{
 
     public Sidebar(){
 	this.setTitle("Your Glorified Post-it Notes");
-	this.setSize(500, 1000);
+	this.setSize(300, 1000);
 	this.setLocation(10, 10);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -19,16 +19,24 @@ public class Sidebar extends JFrame implements ActionListener{
 	sidebar = this.getContentPane();
 	sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
 
-	JButton newNote = new JButton("New Note");
+	JButton newNote = new JButton("NEW NOTE");
 	newNote.addActionListener(this);
 	newNote.setActionCommand("newNote");
+	newNote.setFont(new Font("Verdana", Font.PLAIN, 20));
+	newNote.setFocusPainted(false);
+	newNote.setMaximumSize(new Dimension(130,35));
+	newNote.setAlignmentX(Component.CENTER_ALIGNMENT);
 	
-
 	
-	JButton delete = new JButton("Delete Notes");
+	JButton delete = new JButton("DELETE");
 	delete.addActionListener(this);
 	delete.setActionCommand("delete");
+	delete.setFont(new Font("Verdana", Font.PLAIN, 20));
+	delete.setFocusPainted(false);
+	delete.setMaximumSize(new Dimension(130,35));
+	delete.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+	sidebar.add(fillerButton);
 	sidebar.add(newNote);
 	sidebar.add(delete);
 
@@ -37,16 +45,22 @@ public class Sidebar extends JFrame implements ActionListener{
 	File dir = new File("postitnotes/");
 	File[] directoryListing = dir.listFiles();
 	if(directoryListing.length != 0){
+	    int count = 1;
 	    for(File child : directoryListing){
 		System.out.println(child.getName());
 		String name = child.getName();
-		int i = name.indexOf(".txt");
+		int count = name.indexOf(".txt");
 		if(i>0){
 		    String fileName = name.substring(0,i);
 		    JButton fileOnSidebar = new JButton(fileName);
 		    fileOnSidebar.addActionListener(this);
 		    fileOnSidebar.setActionCommand("txt" + fileName);
+		    fileOnSidebar.setFont("Verdana", Font.PLAIN, 14);
+		    fileOnSidebar.setMaximumSize(300,25)
+		    if(count%2 != 0){
+			fileOnSidebar.
 		    sidebar.add(fileOnSidebar);
+		    i++;
 		}
 	    }
 	}
