@@ -12,12 +12,13 @@ import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import java.text.SimpleDateFormat;
 import com.sun.speech.freetts.*;
 
 public class Postitnotes extends JFrame implements ActionListener {
 
     private Container pane;
-    private JLabel textlabel, titlelabel;
+    private JLabel textlabel, titlelabel, timestamp;
     private JButton b, tts;
     private JTextPane textBody;
     private JTextField titlebar;
@@ -25,6 +26,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     private JComboBox fontsizeselection;
     private String fontchosen;
     private Integer fontsizechosen;
+    private String lastmod;
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
@@ -41,17 +43,14 @@ public class Postitnotes extends JFrame implements ActionListener {
         b = new JButton("save");
 	b.addActionListener(this);
 	b.setActionCommand("save");
-
-	//	choosecolor = new JButton("choose color");
-	//	choosecolor.addActionListener(this);
-	//choosecolor.setActionCommand("choose color");
 	
 	titlebar = new JTextField(10);
 	titlelabel = new JLabel("TITLE: ");
 	textBody = new JTextPane();
 	textBody.setSize(10,60);
 	textlabel = new JLabel("TEXT: ");
-	
+	lastmod = "Not saved";
+	timestamp = new JLabel(lastmod);
 	fontselection = new JComboBox();
 	fontselection.setEditable(true);
 	fontselection.addItem("Serif");
@@ -82,6 +81,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	tts.setActionCommand("tts");
 	textBody.setFont(new Font("Serif",Font.PLAIN,12));
 	titlebar.setFont(new Font("Serif",Font.PLAIN,12));
+	fontchosen = "Serif";
+	fontsizechosen = 12;
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	
 	pane.add(titlelabel);
@@ -91,13 +92,12 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
 	pane.add(fontselection);
-	pane.add(new JSeparator(SwingConstants.VERTICAL));
+
 	pane.add(fontsizeselection);
 
-	//	pane.add(choosecolor);
 	
 	pane.add(tts);
-
+	pane.add(timestamp);
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
@@ -124,6 +124,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	textBody.setSize(10,60);
 	textlabel = new JLabel("TEXT: ");
 
+	timestamp = new JLabel(lastmod);
        	fontselection = new JComboBox();
 	fontselection.setEditable(true);
 	fontselection.addItem("Serif");
@@ -149,8 +150,15 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontsizeselection.addActionListener(this);
 	fontsizeselection.setActionCommand("fontsizesel");
         
-	textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
-       	titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
+	if (fontchosen == null){
+	    fontchosen = "Serif";
+	}
+
+	if (fontsizechosen == null){
+	    fontsizechosen = 12;
+	}
+	
+        
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
        	tts = new JButton("Text-to-Speech");
@@ -164,12 +172,12 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(scroll2,BorderLayout.CENTER);
 	pane.add(b);
 	pane.add(fontselection);
-	pane.add(new JSeparator(SwingConstants.VERTICAL));
 	pane.add(fontsizeselection);
 	pane.add(tts);
 
+	pane.add(timestamp);
 	openFile(filename);
-	
+        
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
@@ -204,6 +212,12 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    writer.close();
 	    current = filename;
 	    setTitle(current);
+
+	    
+	    File f = new File("postitnotes/"+current+".txt");
+	    SimpleDateFormat formatting = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	    lastmod = formatting.format(f.lastModified());
+	    System.out.println(lastmod);
 	    ifChanged = false;
 	    b.setEnabled(false);
 	}
@@ -220,6 +234,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    titlebar.setText(filename);
 	    FileReader r = new FileReader("postitnotes/"+filename+".txt");
 	    textBody.read(r, null);
+	    
+       	textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
+       	titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
 	    ifOpened = true;
 	    ifChanged = false;
 	    //file opens
@@ -252,6 +269,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    else{
 		saveFile(current);
 	    }
+	    timestamp.setText(lastmod);
 	}
 
 	if (event.equals("fontsel")){
@@ -278,19 +296,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    b.setEnabled(ifChanged);
 	    System.out.println(ifChanged);
 	}
-	/**
-	if(event.equals("choose color")){
-	    Color c = JColorChooser.showDialog(pane, "Select a color!", Color.BLACK);
-	    if (c == null){
-		textBody.requestFocusInWindow();
-		return;
-	    }
-	    SimpleAttributeSet a = new SimpleAttributeSet();
-	    StyleConstants.setForeground(a, c);
-	    textBody.setCharacterAttributes(a, false);
-	    textBody.requestFocusInWindow();
-	}
-	**/
 	
 	//text to speech
 	
@@ -310,6 +315,6 @@ public class Postitnotes extends JFrame implements ActionListener {
     //getters and setters will be here (if needed for sidebar or texteditor)
     public static void main (String[]args){
 	Postitnotes b = new Postitnotes();
-       	Postitnotes c = new Postitnotes("testsss");
+       	Postitnotes c = new Postitnotes("anotha");
     }
 }
