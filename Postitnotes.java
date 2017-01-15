@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import com.sun.speech.freetts.*;
 import javax.swing.text.html.*;
+import javax.swing.filechooser.*;
 
 public class Postitnotes extends JFrame implements ActionListener {
 
@@ -184,6 +185,10 @@ public class Postitnotes extends JFrame implements ActionListener {
 	tts = new JButton("Text-to-Speech");
 	tts.addActionListener(this);
 	tts.setActionCommand("tts");
+	//upload picture
+	picture = new JButton("Upload picture");
+	picture.addActionListener(this);
+	picture.setActionCommand("picture");
 	
 	pane.add(titlelabel);
 	pane.add(titlebar);
@@ -195,6 +200,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(fontsizeselection);
 	pane.add(tts);
 	pane.add(bullets);
+	pane.add(picture);
 	pane.add(timestamp);
 	openFile(filename);
         
@@ -326,20 +332,27 @@ public class Postitnotes extends JFrame implements ActionListener {
 	}
 
 	if(event.equals("picture")){
-	    //System.out.println("hello world");
-	    //fileChooserHT chooseFiles = new fileChooserHT();
-	    JButton open = new JButton();
-	    JFileChooser fc = new JFileChooser();
-	    fc.showOpenDialog(null);
-	    fc.setCurrentDirectory(new java.io.File("../"));
-	    fc.setDialogTitle("Choose Picture");
-	    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	    if(fc.showOpenDialog(open) == JFileChooser.APPROVE_OPTION){
-		System.out.println("File chosen");
+	    JFileChooser file = new JFileChooser();
+	    file.setDialogTitle("Choose Picture");
+	    file.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+	    file.setCurrentDirectory(new File(System.getProperty("user.home")));
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Image", "jpg", "gif", "png");
+	    file.addChoosableFileFilter(filter);
+	    file.setAcceptAllFileFilterUsed(false);
+	    int result = file.showSaveDialog(null);
+	    if(result == JFileChooser.APPROVE_OPTION){
+		File selectedFile = file.getSelectedFile();
+		String path = selectedFile.getAbsolutePath();
+		ImageIcon myPic = new ImageIcon(path);
+		Image img = myPic.getImage();
+		Image newimg = img.getScaledInstance(textBody.getWidth(), textBody.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon image = new ImageIcon(newimg);
+		textBody.insertIcon(image);
 	    }
-	    System.out.println("You chose: " + fc.getSelectedFile().getAbsolutePath());
+	    else if(result == JFileChooser.CANCEL_OPTION){
+		System.out.println("No File Select");
+	    }
 	}
-	
 	    
     }
 
