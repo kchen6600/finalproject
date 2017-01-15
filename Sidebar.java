@@ -73,6 +73,8 @@ public class Sidebar extends JFrame implements ActionListener{
 	else{
 	    System.out.println("File don't work");
 	}
+
+	setVisible(true);
 	
 
 	//how are timestamps organized in files??
@@ -83,6 +85,7 @@ public class Sidebar extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	if(event.equals("newNote")){
+	    setVisible(false);
 	    Postitnotes postit = new Postitnotes();
        	}
 	
@@ -91,14 +94,13 @@ public class Sidebar extends JFrame implements ActionListener{
 	}
 
 	if(event.equals("delete")){
+	    setVisible(false);
 	    SidebarDelete deleteNotes = new SidebarDelete();
-	    deleteNotes.setVisible(true);
 	}
     }
     
     public static void main(String[] args){
 	Sidebar hi = new Sidebar();
-	hi.setVisible(true);
     }
 
 }

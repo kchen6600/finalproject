@@ -62,6 +62,7 @@ public class SidebarDelete extends JFrame implements ActionListener{
 	sidebarDelete.add(list);
 	sidebarDelete.add(deleteSelected);
 	sidebarDelete.add(cancel);
+	setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e){
@@ -70,31 +71,20 @@ public class SidebarDelete extends JFrame implements ActionListener{
 	    for(int i = 0; i<filesDeleted.size(); i++){
 		String path = "postitnotes/"+filesDeleted.get(i)+".txt";
 		File file = new File(path);
-		//try{
 		file.delete();
-		/**
-		   }catch(NoSuchFileException x){
-		   System.out.println("No such file or directory");
-		   }catch(DirectoryNotEmptyException x){
-		   System.out.println("Not empty directory");
-		   }catch(IOException x){
-		   System.out.println("File permission problems.");
-		   }
-		**/
+		setVisible(false);
 		Sidebar hello = new Sidebar();
-		hello.setVisible(true);
 		    
 	    }
 	}
 	if(event.equals("cancel")){
+	    setVisible(false);
 	    Sidebar hi = new Sidebar();
-	    hi.setVisible(true);
 	}	    
     }
 
     public static void main(String[] args){
 	SidebarDelete test  = new SidebarDelete();
-	test.setVisible(true);
     }
 }
 

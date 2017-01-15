@@ -33,8 +33,11 @@ public class Postitnotes extends JFrame implements ActionListener {
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
     private String current = "Untitled";
+    private Sidebar refreshedBar;
+
     
     public Postitnotes() {
+	refreshedBar = new Sidebar();
 	this.setTitle("CREATE NEW NOTE");
 	this.setSize(600,300);
 	this.setLocation(100,100);
@@ -166,12 +169,11 @@ public class Postitnotes extends JFrame implements ActionListener {
         
 	if (fontchosen == null){
 	    fontchosen = "Serif";
-	}
+	}	    
 
 	if (fontsizechosen == null){
 	    fontsizechosen = 12;
-	}
-	
+	}	
         
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -203,6 +205,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(picture);
 	pane.add(timestamp);
 	openFile(filename);
+	textBody.setFont(new Font(fontchosen, Font.PLAIN, fontsizechosen));
+
         
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -281,7 +285,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    System.out.println("Clicked Save");
 	    if(current.equals("Untitled")){
 	        current = titlebar.getText();
-		
 		saveFile(current);
 		setTitle(current);
 		System.out.println(ifChanged);
@@ -296,6 +299,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 		saveFile(current);
 	    }
 	    timestamp.setText(lastmod);
+	    refreshedBar.setVisible(false);
+	    Sidebar newRefresh = new Sidebar();
 	}
 
 	if (event.equals("fontsel")){
@@ -308,6 +313,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    ifChanged = true;
 	    b.setEnabled(ifChanged);
 	    System.out.println(ifChanged);
+	    System.out.println(fontchosen);
 	}
 
 	
@@ -315,6 +321,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    System.out.println("Font size selected");
 	    JComboBox sel = (JComboBox) ev.getSource();
 	    fontsizechosen = Integer.parseInt((String)sel.getSelectedItem());
+	    System.out.println(fontsizechosen);
 	    textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
 	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
 	    System.out.println("Font size set");
@@ -358,6 +365,20 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 
     //getters and setters will be here (if needed for sidebar or texteditor)
+    public void setFontSize(int i){
+	fontsizechosen = i;
+    }
+    public int fontSize(){
+	return fontsizechosen;
+    }
+    public void setFont(String f){
+	fontchosen = f;
+    }
+    public String font(){
+	return fontchosen;
+    }
+
+    
     public static void main (String[]args){
 	Postitnotes b = new Postitnotes();
        	Postitnotes c = new Postitnotes("anotha");
