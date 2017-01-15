@@ -36,7 +36,6 @@ public class Sidebar extends JFrame implements ActionListener{
 	delete.setMaximumSize(new Dimension(130,35));
 	delete.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-	sidebar.add(fillerButton);
 	sidebar.add(newNote);
 	sidebar.add(delete);
 
@@ -45,22 +44,29 @@ public class Sidebar extends JFrame implements ActionListener{
 	File dir = new File("postitnotes/");
 	File[] directoryListing = dir.listFiles();
 	if(directoryListing.length != 0){
-	    int count = 1;
+	    int counter = 1;
 	    for(File child : directoryListing){
 		System.out.println(child.getName());
 		String name = child.getName();
-		int count = name.indexOf(".txt");
+		int i = name.indexOf(".txt");
 		if(i>0){
 		    String fileName = name.substring(0,i);
 		    JButton fileOnSidebar = new JButton(fileName);
 		    fileOnSidebar.addActionListener(this);
 		    fileOnSidebar.setActionCommand("txt" + fileName);
-		    fileOnSidebar.setFont("Verdana", Font.PLAIN, 14);
-		    fileOnSidebar.setMaximumSize(300,25)
-		    if(count%2 != 0){
-			fileOnSidebar.
+		    fileOnSidebar.setFont(new Font("Verdana", Font.PLAIN, 15));
+		    fileOnSidebar.setMaximumSize(new Dimension(250,20));
+		    fileOnSidebar.setBorderPainted(false);
+		    fileOnSidebar.setFocusPainted(false);
+		    fileOnSidebar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		    if(counter%2 != 0){
+			fileOnSidebar.setBackground(Color.lightGray);
+		    }
+		    else{
+			fileOnSidebar.setBackground(Color.BLUE);
+		    }
 		    sidebar.add(fileOnSidebar);
-		    i++;
+		    counter++;
 		}
 	    }
 	}
