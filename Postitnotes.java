@@ -14,12 +14,13 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import com.sun.speech.freetts.*;
+import javax.swing.text.html.*;
 
 public class Postitnotes extends JFrame implements ActionListener {
 
     private Container pane;
     private JLabel textlabel, titlelabel, timestamp;
-    private JButton b, tts;
+    private JButton b, tts, bullets, picture;
     private JTextPane textBody;
     private JTextField titlebar;
     private JComboBox fontselection;
@@ -30,9 +31,8 @@ public class Postitnotes extends JFrame implements ActionListener {
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
-
     private String current = "Untitled";
-
+    
     public Postitnotes() {
 	this.setTitle("CREATE NEW NOTE");
 	this.setSize(600,300);
@@ -75,10 +75,21 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontsizeselection.addItem("30");
 	fontsizeselection.addActionListener(this);
 	fontsizeselection.setActionCommand("fontsizesel");
-	
+
+	//bullets feature is glitchy
+	textBody.setEditorKit(new HTMLEditorKit());
+	HTMLEditorKit.InsertHTMLTextAction bulletAction = new HTMLEditorKit.InsertHTMLTextAction("Bullets", "<li> </li>", HTML.Tag.BODY, HTML.Tag.UL);  
+	bullets = new JButton(bulletAction);
+	textBody.setText(textBody.getText());
+	textBody.repaint();
+	//tts button
 	tts = new JButton("Text-to-Speech");
 	tts.addActionListener(this);
 	tts.setActionCommand("tts");
+	//upload picture
+	picture = new JButton("Upload picture");
+	picture.addActionListener(this);
+	picture.setActionCommand("picture");
 	textBody.setFont(new Font("Serif",Font.PLAIN,12));
 	titlebar.setFont(new Font("Serif",Font.PLAIN,12));
 	fontchosen = "Serif";
@@ -97,6 +108,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 	
 	pane.add(tts);
+	pane.add(bullets);
+	pane.add(picture);
 	pane.add(timestamp);
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -161,7 +174,14 @@ public class Postitnotes extends JFrame implements ActionListener {
         
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-       	tts = new JButton("Text-to-Speech");
+	//bullets feature is glitchy
+	textBody.setEditorKit(new HTMLEditorKit());
+	HTMLEditorKit.InsertHTMLTextAction bulletAction = new HTMLEditorKit.InsertHTMLTextAction("Bullets", "<li> </li>", HTML.Tag.BODY, HTML.Tag.UL);  
+	bullets = new JButton(bulletAction);
+	textBody.setText(textBody.getText());
+	textBody.repaint();
+	//tts button
+	tts = new JButton("Text-to-Speech");
 	tts.addActionListener(this);
 	tts.setActionCommand("tts");
 	
@@ -174,7 +194,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(fontselection);
 	pane.add(fontsizeselection);
 	pane.add(tts);
-
+	pane.add(bullets);
 	pane.add(timestamp);
 	openFile(filename);
         
@@ -296,9 +316,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    b.setEnabled(ifChanged);
 	    System.out.println(ifChanged);
 	}
-	
-	//text to speech
-	
+		
 	if(event.equals("tts")){
 	    Voice voice;
 	    VoiceManager vm = VoiceManager.getInstance();
@@ -306,10 +324,24 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    voice.allocate();
 	    voice.speak(textBody.getText());	    
 	}
+
+	if(event.equals("picture")){
+	    //System.out.println("hello world");
+	    //fileChooserHT chooseFiles = new fileChooserHT();
+	    JButton open = new JButton();
+	    JFileChooser fc = new JFileChooser();
+	    fc.showOpenDialog(null);
+	    fc.setCurrentDirectory(new java.io.File("../"));
+	    fc.setDialogTitle("Choose Picture");
+	    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	    if(fc.showOpenDialog(open) == JFileChooser.APPROVE_OPTION){
+		System.out.println("File chosen");
+	    }
+	    System.out.println("You chose: " + fc.getSelectedFile().getAbsolutePath());
+	}
 	
 	    
     }
-
 
 
     //getters and setters will be here (if needed for sidebar or texteditor)
