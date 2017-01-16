@@ -24,8 +24,8 @@ public class Postitnotes extends JFrame implements ActionListener {
     private JTextField titlebar;
     private JComboBox fontselection;
     private JComboBox fontsizeselection;
-    private String fontchosen;
-    private Integer fontsizechosen;
+    private String fontchosen, currentfont;
+    private Integer fontsizechosen, currentfontsize;
     private String lastmod;
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
@@ -83,6 +83,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	titlebar.setFont(new Font("Serif",Font.PLAIN,12));
 	fontchosen = "Serif";
 	fontsizechosen = 12;
+	currentfont= "Serif";
+	currentfontsize = 12;
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	
 	pane.add(titlelabel);
@@ -124,6 +126,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	textBody.setSize(10,60);
 	textlabel = new JLabel("TEXT: ");
 
+	
        	fontselection = new JComboBox();
 	fontselection.setEditable(true);
 	fontselection.addItem("Serif");
@@ -148,7 +151,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontsizeselection.addItem("30");
 	fontsizeselection.addActionListener(this);
 	fontsizeselection.setActionCommand("fontsizesel");
-        
+
+	/**
 	if (fontchosen == null){
 	    fontchosen = "Serif";
 	}
@@ -156,6 +160,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	if (fontsizechosen == null){
 	    fontsizechosen = 12;
 	}
+	**/
 	
         
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -213,8 +218,16 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    current = filename;
 	    setTitle(current);
 
+	     File f = new File("postitnotes/"+current+".txt");
+	    SimpleDateFormat formatting = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	    String modified = formatting.format(f.lastModified());
+	    lastmod = modified;
+
 	    ifChanged = false;
 	    b.setEnabled(false);
+	    System.out.println(fontchosen + fontsizechosen);
+	    currentfont = fontchosen;
+	    currentfontsize = fontsizechosen;
 	}
 	catch(IOException e){
 	    e.printStackTrace();
@@ -225,10 +238,17 @@ public class Postitnotes extends JFrame implements ActionListener {
     //open file
     private void openFile(String filename){
 	try{
+	    
+	    System.out.println(currentfont +currentfontsize);
+	    
+	    textBody.setFont(new Font(currentfont,Font.PLAIN,currentfontsize));
+	    titlebar.setFont(new Font(currentfont,Font.PLAIN,currentfontsize));
 	    current = filename;
 	    titlebar.setText(filename);
 	    FileReader r = new FileReader("postitnotes/"+filename+".txt");
 	    textBody.read(r, null);
+
+	    System.out.println(fontchosen +fontsizechosen);
 	    
 	    File f = new File("postitnotes/"+current+".txt");
 	    SimpleDateFormat formatting = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
