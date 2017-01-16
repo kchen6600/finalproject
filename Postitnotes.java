@@ -124,7 +124,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	textBody.setSize(10,60);
 	textlabel = new JLabel("TEXT: ");
 
-	timestamp = new JLabel(lastmod);
        	fontselection = new JComboBox();
 	fontselection.setEditable(true);
 	fontselection.addItem("Serif");
@@ -175,8 +174,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(fontsizeselection);
 	pane.add(tts);
 
-	pane.add(timestamp);
 	openFile(filename);
+	timestamp = new JLabel(lastmod);
+	pane.add(timestamp);
         
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -213,11 +213,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    current = filename;
 	    setTitle(current);
 
-	    
-	    File f = new File("postitnotes/"+current+".txt");
-	    SimpleDateFormat formatting = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-	    lastmod = formatting.format(f.lastModified());
-	    System.out.println(lastmod);
 	    ifChanged = false;
 	    b.setEnabled(false);
 	}
@@ -235,8 +230,10 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    FileReader r = new FileReader("postitnotes/"+filename+".txt");
 	    textBody.read(r, null);
 	    
-       	textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
-       	titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
+	    File f = new File("postitnotes/"+current+".txt");
+	    SimpleDateFormat formatting = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	    String modified = formatting.format(f.lastModified());
+	    lastmod = modified;
 	    ifOpened = true;
 	    ifChanged = false;
 	    //file opens
@@ -278,7 +275,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    fontchosen = (String) selection.getSelectedItem();
 	    textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
 	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
-	    System.out.println("Font set");
+	    System.out.println("Font set"+fontchosen+fontsizechosen);
 	    ifChanged = true;
 	    b.setEnabled(ifChanged);
 	    System.out.println(ifChanged);
@@ -291,7 +288,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    fontsizechosen = Integer.parseInt((String)sel.getSelectedItem());
 	    textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
 	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
-	    System.out.println("Font size set");
+	    System.out.println("Font size set"+fontchosen+fontsizechosen);
 	    ifChanged = true;
 	    b.setEnabled(ifChanged);
 	    System.out.println(ifChanged);
