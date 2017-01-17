@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.ComponentListener;
+import java.awt.Component;
+import java.awt.event.ComponentEvent;
 import java.awt.Font;
 import java.io.*;
 import java.util.*;
@@ -39,6 +42,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     final static boolean RIGHT_TO_LEFT = false;
     private String current = "Untitled";
     private Sidebar refreshedBar;
+    private Point currentlocation;
     
     public Postitnotes() {
 	refreshedBar = new Sidebar();
@@ -188,6 +192,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(bullets);
 	pane.add(picture);
 	**/
+
+	currentlocation = this.getLocation();
 	
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -201,7 +207,6 @@ public class Postitnotes extends JFrame implements ActionListener {
     
     public Postitnotes(String filename) {
 	this.setSize(600,300);
-	this.setLocation(100,100);
 	
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
@@ -282,6 +287,7 @@ public class Postitnotes extends JFrame implements ActionListener {
        	pane.add(fontsizeselection);
 	pane.add(tts);
 	openFile(filename);
+	this.setLocation(currentlocation);
 
 	timestamp = new JLabel(lastmod);
 
@@ -326,13 +332,15 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 	    textBody.write(writer);
 
-	    writer.write("font="+fontchosen+"fontsizechosen="+fontsizechosen+"...");
+	    writer.write("font="+fontchosen+"fontsizechosen="+fontsizechosen+this.getLocation());
 	  
 	    writer.close();
 	   
 	    
 	    current = filename;
 	    setTitle(current);
+
+	    // currentlocation =this.getLocation();
 
 	    File f = new File("postitnotes/"+current+".txt");
 	    SimpleDateFormat formatting = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -369,6 +377,10 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    fontchosen = choices.substring((choices.indexOf("font="))+5,(choices.indexOf("fontsizechosen")));
 	    fontsizechosen = Integer.parseInt(choices.substring((choices.indexOf("fontsizechosen="))+15,(choices.indexOf("fontsizechosen="))+17));
 
+	    Integer xval = Integer.parseInt(choices.substring((choices.indexOf("java.awt.Point[x="))+17,(choices.indexOf(",y="))));
+	    Integer yval = Integer.parseInt(choices.substring((choices.indexOf(",y="))+3,(choices.indexOf("]"))));
+
+	    currentlocation = new Point(xval, yval);
 	    s.close();
 
 	    gotofont = new Font(fontchosen, Font.PLAIN, fontsizechosen);
