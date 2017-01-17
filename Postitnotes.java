@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ComponentListener;
 import java.awt.Component;
+import java.awt.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.Font;
 import java.io.*;
@@ -194,6 +195,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	**/
 
 	currentlocation = this.getLocation();
+	pane.addComponentListener(c1);
 	
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -246,16 +248,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontsizeselection.addActionListener(this);
 	fontsizeselection.setActionCommand("fontsizesel");
 	
-	/**
-	if (fontchosen == null){
-	    fontchosen = "Serif";
-	}	    
-
-	if (fontsizechosen == null){
-	    fontsizechosen = 12;
-	}	
-        **/
-	
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 	//bullets feature is glitchy
@@ -289,6 +281,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	openFile(filename);
 	this.setLocation(currentlocation);
 
+	pane.addComponentListener(c1);
 	timestamp = new JLabel(lastmod);
 
 
@@ -308,6 +301,13 @@ public class Postitnotes extends JFrame implements ActionListener {
        
   }
 
+    private ComponentListener c1 = new ComponentAdapter(){
+	    public void componentMoved(ComponentEvent e){
+		Component c = (Component) e.getSource();
+		ifChanged = true;
+		b.setEnabled(ifChanged);
+	    }
+	};
     
      private KeyListener k1 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
