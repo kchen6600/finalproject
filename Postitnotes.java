@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.ComponentListener;
+import java.awt.Component;
+import java.awt.event.ComponentEvent;
 import java.awt.Font;
 import java.io.*;
 import java.util.*;
@@ -39,6 +42,7 @@ public class Postitnotes extends JFrame implements ActionListener {
     final static boolean RIGHT_TO_LEFT = false;
     private String current = "Untitled";
     private Sidebar refreshedBar;
+    private Point currentlocation;
     
     public Postitnotes() {
 	refreshedBar = new Sidebar();
@@ -77,11 +81,14 @@ public class Postitnotes extends JFrame implements ActionListener {
 	c.gridy = 2;
 	c.gridwidth = 5;
 	c.fill = GridBagConstraints.BOTH;
+
+	textBody.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
 	gotofont = new Font("Serif", Font.PLAIN, 12);
-	textBody.setFont(gotofont);
+       	textBody.setFont(gotofont);
 	titlebar.setFont(gotofont);
 	fontchosen = "Serif";
 	fontsizechosen = 12;
+	
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	pane.add(textBody, c);
 	c.gridwidth = 1;
@@ -185,6 +192,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(bullets);
 	pane.add(picture);
 	**/
+
+	currentlocation = this.getLocation();
+	//pane.addComponentListener(c1);
 	
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -198,7 +208,6 @@ public class Postitnotes extends JFrame implements ActionListener {
     
     public Postitnotes(String filename) {
 	this.setSize(600,300);
-	this.setLocation(100,100);
 	
 	pane = this.getContentPane();
 	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
@@ -238,16 +247,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontsizeselection.addActionListener(this);
 	fontsizeselection.setActionCommand("fontsizesel");
 	
-	/**
-	if (fontchosen == null){
-	    fontchosen = "Serif";
-	}	    
-
-	if (fontsizechosen == null){
-	    fontsizechosen = 12;
-	}	
-        **/
-	
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 	//bullets feature is glitchy
@@ -266,7 +265,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	picture = new JButton("Upload picture");
 	picture.addActionListener(this);
 	picture.setActionCommand("picture");
-        
+
+	
+	textBody.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
 	pane.add(titlelabel);
 	pane.add(titlebar);
 	pane.add(textlabel);
@@ -277,7 +278,9 @@ public class Postitnotes extends JFrame implements ActionListener {
        	pane.add(fontsizeselection);
 	pane.add(tts);
 	openFile(filename);
+	this.setLocation(currentlocation);
 
+        //pane.addComponentListener(c1);
 	timestamp = new JLabel(lastmod);
 
 
@@ -285,19 +288,37 @@ public class Postitnotes extends JFrame implements ActionListener {
 	//	pane.add(bullets);
 	pane.add(picture);
 	pane.add(timestamp);
-	//	textBody.setFont(new Font(fontchosen, Font.PLAIN, fontsizechosen));
-
-
         
-	b.setEnabled(ifChanged);
+	b.setEnabled(false);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
 	setTitle(current);
 	setVisible(true);
        
   }
+    /**
+    private ComponentListener c1 = new ComponentAdapter(){
+	    public void componentMoved(ComponentEvent e){
+		ifChanged = true;
+		b.setEnabled(ifChanged);
+	    }
 
-    
+	    public void componentShown(ComponentEvent e){
+		ifChanged = true;
+		b.setEnabled(ifChanged);
+	    }
+
+	    public void componentHidden(ComponentEvent e){
+		ifChanged = true;
+		b.setEnabled(ifChanged);
+	    }
+	    public void componentResized(ComponentEvent e){
+		ifChanged = true;
+		b.setEnabled(ifChanged);
+	    }
+	};
+    **/
+
      private KeyListener k1 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
@@ -321,13 +342,15 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 	    textBody.write(writer);
 
-	    writer.write("font="+fontchosen+"fontsizechosen="+fontsizechosen+"...");
+	    writer.write("font="+fontchosen+"fontsizechosen="+fontsizechosen+this.getLocation());
 	  
 	    writer.close();
 	   
 	    
 	    current = filename;
 	    setTitle(current);
+
+	    // currentlocation =this.getLocation();
 
 	    File f = new File("postitnotes/"+current+".txt");
 	    SimpleDateFormat formatting = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -336,9 +359,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 	    ifChanged = false;
 	    b.setEnabled(false);
-	    System.out.println(fontchosen + fontsizechosen);
-
-
 	}
 	catch(IOException e){
 	    e.printStackTrace();
@@ -364,6 +384,10 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    fontchosen = choices.substring((choices.indexOf("font="))+5,(choices.indexOf("fontsizechosen")));
 	    fontsizechosen = Integer.parseInt(choices.substring((choices.indexOf("fontsizechosen="))+15,(choices.indexOf("fontsizechosen="))+17));
 
+	    Integer xval = Integer.parseInt(choices.substring((choices.indexOf("java.awt.Point[x="))+17,(choices.indexOf(",y="))));
+	    Integer yval = Integer.parseInt(choices.substring((choices.indexOf(",y="))+3,(choices.indexOf("]"))));
+
+	    currentlocation = new Point(xval, yval);
 	    s.close();
 
 	    gotofont = new Font(fontchosen, Font.PLAIN, fontsizechosen);
@@ -376,6 +400,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    lastmod = modified;
 	    ifOpened = true;
 	    ifChanged = false;
+	    b.setEnabled(false);
 	    //file opens
 	}
 	catch(IOException e){
@@ -390,11 +415,14 @@ public class Postitnotes extends JFrame implements ActionListener {
 	String event = ev.getActionCommand();
 	if (event.equals("save")){
 	    System.out.println("Clicked Save");
-	    if(current.equals("Untitled")){
+	    if (titlebar.getText().equals("")){
+		JOptionPane.showMessageDialog(pane, "You didn't write a title!");
+
+	    }
+	    else if(current.equals("Untitled")){
 	        current = titlebar.getText();
 		saveFile(current);
 		setTitle(current);
-		System.out.println(ifChanged);
 	    }
 	    else if (new File("postitnotes/"+current+".txt").exists()){
 		int confirm = JOptionPane.showConfirmDialog(pane, "Would you like to override the existing note?");
@@ -411,32 +439,25 @@ public class Postitnotes extends JFrame implements ActionListener {
 	}
 
 	if (event.equals("fontsel")){
-	    System.out.println("Font selected");
 	    JComboBox selection = (JComboBox) ev.getSource();
 	    fontchosen = (String) selection.getSelectedItem();
 	    gotofont = new Font(fontchosen, Font.PLAIN, fontsizechosen);
 	    textBody.setFont(gotofont);
 	    titlebar.setFont(gotofont);
-	    System.out.println("Font set"+fontchosen+fontsizechosen);
 	    ifChanged = true;
 	    b.setEnabled(ifChanged);
-	    System.out.println(ifChanged);
 	}
 
 	
 	if (event.equals("fontsizesel")){
-	    System.out.println("Font size selected");
 	    JComboBox sel = (JComboBox) ev.getSource();
 	    fontsizechosen = Integer.parseInt((String)sel.getSelectedItem());
 
-	    System.out.println(fontsizechosen);
 	    textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
 	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
-	    System.out.println("Font size set");
 
 	    ifChanged = true;
 	    b.setEnabled(ifChanged);
-	    System.out.println(ifChanged);
 	}
 		
 	if(event.equals("tts")){
@@ -444,7 +465,11 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    VoiceManager vm = VoiceManager.getInstance();
 	    voice = vm.getVoice(voicename);
 	    voice.allocate();
-	    voice.speak(textBody.getText());	    
+	    
+	    String words = textBody.getText();
+	    String wordstosay = words.substring((words.indexOf("<p style=\"margin-top: 0\">"))+25,(words.indexOf("</p>")));
+	    //voice.speak(textBody.getText());
+	    voice.speak(wordstosay);
 	}
 
 	if(event.equals("picture")){

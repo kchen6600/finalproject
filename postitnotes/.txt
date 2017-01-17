@@ -4,8 +4,8 @@
   </head>
   <body>
     <p style="margin-top: 0">
-      hello
+      no title
     </p>
   </body>
 </html>
-font=Monospacedfontsizechosen=12...
+font=Seriffontsizechosen=12java.awt.Point[x=100,y=100]
