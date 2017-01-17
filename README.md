@@ -4,11 +4,14 @@ This project is a glorified post-it note program that acts as a combination of t
 
 List of Working features / Things I should test:
 - opening, editing, and saving a file
+- selecting font size and font family of the notes and saving font styling changes
 - only lets you save a file if changes have been made
 - uploading images
+- text to speech option
 
 List of unresolved bugs:
 - the automated bullet points feature is glitchy
+- remembers position of pane when last saved, but doesn't allow you to make the edit of moving the pane and saving just that change (componentlistener was not working)
 
 Directions on how to compile and run your code:
 - compile and run Sidebar.java with .:jar/*
