@@ -194,7 +194,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	**/
 
 	currentlocation = this.getLocation();
-	pane.addComponentListener(c1);
+	//pane.addComponentListener(c1);
 	
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -280,7 +280,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	openFile(filename);
 	this.setLocation(currentlocation);
 
-	pane.addComponentListener(c1);
+        //pane.addComponentListener(c1);
 	timestamp = new JLabel(lastmod);
 
 
@@ -289,21 +289,36 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(picture);
 	pane.add(timestamp);
         
-	b.setEnabled(ifChanged);
+	b.setEnabled(false);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
 	setTitle(current);
 	setVisible(true);
        
   }
-
+    /**
     private ComponentListener c1 = new ComponentAdapter(){
 	    public void componentMoved(ComponentEvent e){
 		ifChanged = true;
 		b.setEnabled(ifChanged);
 	    }
+
+	    public void componentShown(ComponentEvent e){
+		ifChanged = true;
+		b.setEnabled(ifChanged);
+	    }
+
+	    public void componentHidden(ComponentEvent e){
+		ifChanged = true;
+		b.setEnabled(ifChanged);
+	    }
+	    public void componentResized(ComponentEvent e){
+		ifChanged = true;
+		b.setEnabled(ifChanged);
+	    }
 	};
-    
+    **/
+
      private KeyListener k1 = new KeyAdapter() {
 		public void keyPressed(KeyEvent e) {
 			ifChanged = true;
@@ -385,6 +400,7 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    lastmod = modified;
 	    ifOpened = true;
 	    ifChanged = false;
+	    b.setEnabled(false);
 	    //file opens
 	}
 	catch(IOException e){
