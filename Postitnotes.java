@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ComponentListener;
 import java.awt.Component;
-import java.awt.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.Font;
 import java.io.*;
@@ -407,7 +406,11 @@ public class Postitnotes extends JFrame implements ActionListener {
 	String event = ev.getActionCommand();
 	if (event.equals("save")){
 	    System.out.println("Clicked Save");
-	    if(current.equals("Untitled")){
+	    if (titlebar.getText().equals("")){
+		JOptionPane.showMessageDialog(pane, "You didn't write a title!");
+		System.out.println("No title!");
+	    }
+	    else if(current.equals("Untitled")){
 	        current = titlebar.getText();
 		saveFile(current);
 		setTitle(current);
