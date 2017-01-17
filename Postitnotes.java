@@ -77,11 +77,14 @@ public class Postitnotes extends JFrame implements ActionListener {
 	c.gridy = 2;
 	c.gridwidth = 5;
 	c.fill = GridBagConstraints.BOTH;
+
+	textBody.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
 	gotofont = new Font("Serif", Font.PLAIN, 12);
-	textBody.setFont(gotofont);
+       	textBody.setFont(gotofont);
 	titlebar.setFont(gotofont);
 	fontchosen = "Serif";
 	fontsizechosen = 12;
+	
 	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	pane.add(textBody, c);
 	c.gridwidth = 1;
@@ -266,7 +269,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	picture = new JButton("Upload picture");
 	picture.addActionListener(this);
 	picture.setActionCommand("picture");
-        
+
+	
+	textBody.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
 	pane.add(titlelabel);
 	pane.add(titlebar);
 	pane.add(textlabel);
