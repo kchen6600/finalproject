@@ -33,32 +33,84 @@ public class Postitnotes extends JFrame implements ActionListener {
     private boolean ifChanged = false;
     private boolean ifSaved, ifOpened;
     private static final String voicename = "kevin16";
-
     private Font gotofont;
-
+    final static boolean shouldFill = true;
+    final static boolean shouldWeighX = true;
+    final static boolean RIGHT_TO_LEFT = false;
     private String current = "Untitled";
     private Sidebar refreshedBar;
-
     
     public Postitnotes() {
 	refreshedBar = new Sidebar();
 	this.setTitle("CREATE NEW NOTE");
 	this.setSize(600,300);
 	this.setLocation(100,100);
-	
 	pane = this.getContentPane();
-	pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-        b = new JButton("save");
-	b.addActionListener(this);
-	b.setActionCommand("save");
+	pane.setLayout(new GridBagLayout());
+	GridBagConstraints c = new GridBagConstraints();
+	if(shouldFill){
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	}
+	if(RIGHT_TO_LEFT){
+	    pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+	}
 	
-	titlebar = new JTextField(10);
+	titlebar = new JTextField(55);
+	c.fill = GridBagConstraints.HORIZONTAL;
+	c.gridx = 1;
+	c.gridy = 0;
+	c.gridwidth = 4;
+	pane.add(titlebar, c);
+	c.gridwidth = 1;
+	    
 	titlelabel = new JLabel("TITLE: ");
+	c.gridx = 0;
+	c.gridy = 0;
+	c.insets = new Insets(10, 0, 0, 0);
+	pane.add(titlelabel, c);
+	c.insets = new Insets(0, 0, 0, 0);
+	
 	textBody = new JTextPane();
-	textBody.setSize(10,60);
+	textBody.setSize(55,60);
+	c.ipady = 60;
+	c.gridx = 0;
+	c.gridy = 2;
+	c.gridwidth = 5;
+	c.fill = GridBagConstraints.BOTH;
+	gotofont = new Font("Serif", Font.PLAIN, 12);
+	textBody.setFont(gotofont);
+	titlebar.setFont(gotofont);
+	fontchosen = "Serif";
+	fontsizechosen = 12;
+	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	pane.add(textBody, c);
+	c.gridwidth = 1;
+	
 	textlabel = new JLabel("TEXT: ");
+	c.ipady = 20;
+	c.gridx = 0;
+	c.gridy = 1;
+	pane.add(textlabel, c);
+	c.ipady = 0;
+	
 	lastmod = "Not saved";
 	timestamp = new JLabel(lastmod);
+	c.gridx = 2;
+	c.gridy = 5;
+	pane.add(timestamp, c);
+
+	Insets pad = new Insets(0, 0, 10, 0);
+	b = new JButton("save");
+	b.addActionListener(this);
+	b.setActionCommand("save");
+	c.gridx = 2;
+	c.gridy = 4;
+	c.insets = pad;
+	pane.add(b, c);
+	c.gridwidth = 1;
+
+	Insets pad1 = new Insets(10, 0, 10, 0);
+	c.insets = pad1;
 	fontselection = new JComboBox();
 	fontselection.setEditable(false);
 	fontselection.addItem("Serif");
@@ -68,6 +120,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontselection.addItem("DialogInput");
 	fontselection.addActionListener(this);
 	fontselection.setActionCommand("fontsel");
+	c.gridx = 0;
+	c.gridy = 3;
+	pane.add(fontselection, c);
 	
 	fontsizeselection = new JComboBox();
 	fontsizeselection.setEditable(false);
@@ -83,6 +138,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 	fontsizeselection.addItem("30");
 	fontsizeselection.addActionListener(this);
 	fontsizeselection.setActionCommand("fontsizesel");
+	c.gridx = 1;
+	c.gridy = 3;
+	pane.add(fontsizeselection, c);
 
 	//bullets feature is glitchy
 	textBody.setEditorKit(new HTMLEditorKit());
@@ -90,28 +148,35 @@ public class Postitnotes extends JFrame implements ActionListener {
 	bullets = new JButton(bulletAction);
 	textBody.setText(textBody.getText());
 	textBody.repaint();
+	c.gridx = 3;
+	c.gridy = 3;
+	pane.add(bullets, c);
+	
 	//tts button
 	tts = new JButton("Text-to-Speech");
 	tts.addActionListener(this);
 	tts.setActionCommand("tts");
+	c.gridx = 2;
+	c.gridy = 3;
+	c.gridheight = 1;
+	pane.add(tts, c);
+	    
 	//upload picture
 	picture = new JButton("Upload picture");
 	picture.addActionListener(this);
 	picture.setActionCommand("picture");
+	c.gridx = 4;
+	c.gridy = 3;
+	pane.add(picture, c);
 
-       	gotofont = new Font("Serif", Font.PLAIN, 12);
-	textBody.setFont(gotofont);
-	titlebar.setFont(gotofont);
-	fontchosen = "Serif";
-	fontsizechosen = 12;
-	JScrollPane scroll2 = new JScrollPane(textBody,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-	
+
+	/**
 	pane.add(titlelabel);
 	pane.add(titlebar);
 	pane.add(textlabel);
 	pane.add(textBody);
 	pane.add(scroll2,BorderLayout.CENTER);
-	pane.add(b);
+	//pane.add(b);
 	pane.add(fontselection);
 	pane.add(fontsizeselection);
 
@@ -119,7 +184,8 @@ public class Postitnotes extends JFrame implements ActionListener {
 	pane.add(tts);
 	pane.add(bullets);
 	pane.add(picture);
-	pane.add(timestamp);
+	**/
+	
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
 	titlebar.addKeyListener(k2);
@@ -186,10 +252,12 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 	//bullets feature is glitchy
 	textBody.setEditorKit(new HTMLEditorKit());
+	/**
 	HTMLEditorKit.InsertHTMLTextAction bulletAction = new HTMLEditorKit.InsertHTMLTextAction("Bullets", "<li> </li>", HTML.Tag.BODY, HTML.Tag.UL);  
 	bullets = new JButton(bulletAction);
 	textBody.setText(textBody.getText());
 	textBody.repaint();
+	**/
 	//tts button
 	tts = new JButton("Text-to-Speech");
 	tts.addActionListener(this);
@@ -212,7 +280,9 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 	timestamp = new JLabel(lastmod);
 
-	pane.add(bullets);
+
+
+	//	pane.add(bullets);
 	pane.add(picture);
 	pane.add(timestamp);
 	//	textBody.setFont(new Font(fontchosen, Font.PLAIN, fontsizechosen));
@@ -420,6 +490,6 @@ public class Postitnotes extends JFrame implements ActionListener {
     
     public static void main (String[]args){
 	Postitnotes b = new Postitnotes();
-       	Postitnotes c = new Postitnotes("anotha");
+       	Postitnotes c = new Postitnotes("nihao");
     }
 }
