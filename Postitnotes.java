@@ -288,9 +288,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 	//	pane.add(bullets);
 	pane.add(picture);
 	pane.add(timestamp);
-	//	textBody.setFont(new Font(fontchosen, Font.PLAIN, fontsizechosen));
-
-
         
 	b.setEnabled(ifChanged);
        	textBody.addKeyListener(k1);
@@ -302,7 +299,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 
     private ComponentListener c1 = new ComponentAdapter(){
 	    public void componentMoved(ComponentEvent e){
-		Component c = (Component) e.getSource();
 		ifChanged = true;
 		b.setEnabled(ifChanged);
 	    }
@@ -348,9 +344,6 @@ public class Postitnotes extends JFrame implements ActionListener {
 
 	    ifChanged = false;
 	    b.setEnabled(false);
-	    System.out.println(fontchosen + fontsizechosen);
-
-
 	}
 	catch(IOException e){
 	    e.printStackTrace();
@@ -408,13 +401,12 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    System.out.println("Clicked Save");
 	    if (titlebar.getText().equals("")){
 		JOptionPane.showMessageDialog(pane, "You didn't write a title!");
-		System.out.println("No title!");
+
 	    }
 	    else if(current.equals("Untitled")){
 	        current = titlebar.getText();
 		saveFile(current);
 		setTitle(current);
-		System.out.println(ifChanged);
 	    }
 	    else if (new File("postitnotes/"+current+".txt").exists()){
 		int confirm = JOptionPane.showConfirmDialog(pane, "Would you like to override the existing note?");
@@ -431,32 +423,25 @@ public class Postitnotes extends JFrame implements ActionListener {
 	}
 
 	if (event.equals("fontsel")){
-	    System.out.println("Font selected");
 	    JComboBox selection = (JComboBox) ev.getSource();
 	    fontchosen = (String) selection.getSelectedItem();
 	    gotofont = new Font(fontchosen, Font.PLAIN, fontsizechosen);
 	    textBody.setFont(gotofont);
 	    titlebar.setFont(gotofont);
-	    System.out.println("Font set"+fontchosen+fontsizechosen);
 	    ifChanged = true;
 	    b.setEnabled(ifChanged);
-	    System.out.println(ifChanged);
 	}
 
 	
 	if (event.equals("fontsizesel")){
-	    System.out.println("Font size selected");
 	    JComboBox sel = (JComboBox) ev.getSource();
 	    fontsizechosen = Integer.parseInt((String)sel.getSelectedItem());
 
-	    System.out.println(fontsizechosen);
 	    textBody.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
 	    titlebar.setFont(new Font(fontchosen,Font.PLAIN,fontsizechosen));
-	    System.out.println("Font size set");
 
 	    ifChanged = true;
 	    b.setEnabled(ifChanged);
-	    System.out.println(ifChanged);
 	}
 		
 	if(event.equals("tts")){
