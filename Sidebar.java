@@ -46,7 +46,6 @@ public class Sidebar extends JFrame implements ActionListener{
 	File dir = new File("postitnotes/");
 	File[] directoryListing = dir.listFiles();
 	if(directoryListing.length != 0){
-	    int counter = 1;
 	    for(File child : directoryListing){
 		System.out.println(child.getName());
 		String name = child.getName();
@@ -55,19 +54,13 @@ public class Sidebar extends JFrame implements ActionListener{
 		    String fileName = name.substring(0,i);
 		    JButton fileOnSidebar = new JButton(fileName);
 		    fileOnSidebar.addActionListener(this);
-		    fileOnSidebar.setActionCommand("txt" + fileName);
+		    String eventCommand = "txt" + fileName;
+		    fileOnSidebar.setActionCommand(eventCommand);
 		    fileOnSidebar.setFont(new Font("Verdana", Font.PLAIN, 15));
 		    fileOnSidebar.setMaximumSize(new Dimension(250,20));
       		    fileOnSidebar.setFocusPainted(false);
 		    fileOnSidebar.setAlignmentX(Component.CENTER_ALIGNMENT);
-		    if(counter%2 != 0){
-			fileOnSidebar.setBackground(Color.WHITE);
-		    }
-		    else{
-			fileOnSidebar.setBackground(Color.BLUE);
-		    }
 		    sidebar.add(fileOnSidebar);
-		    counter++;
 		}
 	    }
 	}
