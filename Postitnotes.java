@@ -449,7 +449,11 @@ public class Postitnotes extends JFrame implements ActionListener {
 	    VoiceManager vm = VoiceManager.getInstance();
 	    voice = vm.getVoice(voicename);
 	    voice.allocate();
-	    voice.speak(textBody.getText());	    
+	    
+	    String words = textBody.getText();
+	    String wordstosay = words.substring((words.indexOf("<p style=\"margin-top: 0\">"))+25,(words.indexOf("</p>")));
+	    //voice.speak(textBody.getText());
+	    voice.speak(wordstosay);
 	}
 
 	if(event.equals("picture")){
