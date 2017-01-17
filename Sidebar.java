@@ -47,7 +47,6 @@ public class Sidebar extends JFrame implements ActionListener{
 	File[] directoryListing = dir.listFiles();
 	if(directoryListing.length != 0){
 	    for(File child : directoryListing){
-		System.out.println(child.getName());
 		String name = child.getName();
 		int i = name.indexOf(".txt");
 		if(i>0){
