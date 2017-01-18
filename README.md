@@ -12,6 +12,8 @@ List of Working features / Things I should test:
 List of unresolved bugs:
 - the automated bullet points feature is glitchy
 - remembers position of pane when last saved, but doesn't allow you to make the edit of moving the pane and saving just that change (componentlistener was not working)
+- if bullet points or a picture is added, text-to-speech will only read text written before the bullet points/picture
+- text font and text size does not work on any text included after a picture
 
 Directions on how to compile and run your code:
 - compile and run Sidebar.java with .:jar/*
